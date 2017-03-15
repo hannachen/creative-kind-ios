@@ -14,6 +14,7 @@
 		5D0F920C1E77A33500A80DD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D0F920A1E77A33500A80DD7 /* LaunchScreen.storyboard */; };
 		5D0F92171E77A33500A80DD7 /* creative_kindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0F92161E77A33500A80DD7 /* creative_kindTests.swift */; };
 		5D0F92221E77A33500A80DD7 /* creative_kindUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0F92211E77A33500A80DD7 /* creative_kindUITests.swift */; };
+		5DCA71B71E78DF1100FD32F7 /* ColorShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCA71B61E78DF1100FD32F7 /* ColorShapeLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		5D0F921D1E77A33500A80DD7 /* creative-kindUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "creative-kindUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D0F92211E77A33500A80DD7 /* creative_kindUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = creative_kindUITests.swift; sourceTree = "<group>"; };
 		5D0F92231E77A33500A80DD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DCA71B61E78DF1100FD32F7 /* ColorShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorShapeLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,10 +99,11 @@
 		5D0F92001E77A33500A80DD7 /* creative-kind */ = {
 			isa = PBXGroup;
 			children = (
+				5D0F92081E77A33500A80DD7 /* Assets.xcassets */,
 				5D0F92011E77A33500A80DD7 /* AppDelegate.swift */,
 				5D0F92031E77A33500A80DD7 /* ViewController.swift */,
+				5DCA71B61E78DF1100FD32F7 /* ColorShapeLayer.swift */,
 				5D0F92051E77A33500A80DD7 /* Main.storyboard */,
-				5D0F92081E77A33500A80DD7 /* Assets.xcassets */,
 				5D0F920A1E77A33500A80DD7 /* LaunchScreen.storyboard */,
 				5D0F920D1E77A33500A80DD7 /* Info.plist */,
 			);
@@ -264,6 +267,7 @@
 			files = (
 				5D0F92041E77A33500A80DD7 /* ViewController.swift in Sources */,
 				5D0F92021E77A33500A80DD7 /* AppDelegate.swift in Sources */,
+				5DCA71B71E78DF1100FD32F7 /* ColorShapeLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +518,7 @@
 				5D0F92281E77A33500A80DD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5D0F92291E77A33500A80DD7 /* Build configuration list for PBXNativeTarget "creative-kindTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +527,7 @@
 				5D0F922B1E77A33500A80DD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5D0F922C1E77A33500A80DD7 /* Build configuration list for PBXNativeTarget "creative-kindUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +536,7 @@
 				5D0F922E1E77A33500A80DD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
