@@ -1,5 +1,5 @@
 //
-//  ColorShapeLayer.swift
+//  TriangleShapeLayer
 //  creative-kind
 //
 //  Created by Hanna Chen on 3/14/17.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ColorShapeLayer: CAShapeLayer {
+class TriangleShapeLayer: CAShapeLayer {
     
     var trianglePath: UIBezierPath?
     
-    override func hitTest(_ p: CGPoint) -> ColorShapeLayer? {
+    override func hitTest(_ p: CGPoint) -> TriangleShapeLayer? {
         guard let trianglePath = self.trianglePath as UIBezierPath?,
               trianglePath.cgPath.contains(p) else {
             return nil
@@ -25,6 +25,7 @@ class ColorShapeLayer: CAShapeLayer {
         // Styles
         if reverse {
             self.fillColor = UIColor.blue.cgColor
+            print("reverse...")
         } else {
             self.fillColor = UIColor.red.cgColor
         }
@@ -55,7 +56,6 @@ class ColorShapeLayer: CAShapeLayer {
         }
         
         if reverse {
-            print("reverse...")
             /*
              Flip: *   *  | Normal: x   *
                           |
@@ -79,7 +79,6 @@ class ColorShapeLayer: CAShapeLayer {
         }
         
         if reverse {
-            print("reverse...")
             /*
              Flip: *   *  | Normal: *   *
                           |
