@@ -1,5 +1,5 @@
 //
-//  TriangleShapeLayer
+//  ColorShapeLayer.swift
 //  creative-kind
 //
 //  Created by Hanna Chen on 3/14/17.
@@ -52,7 +52,7 @@ class TriangleShapeLayer: CAShapeLayer {
     func firstPoint(position: CGPoint, size: CGFloat, flip: Bool = false, reverse: Bool = false)-> CGPoint {
         guard let firstPosition = position as CGPoint?,
               let triangleSize = size as CGFloat? else {
-                return CGPoint(x: CGFloat(0), y: CGFloat(0))
+                return CGPoint.zero
         }
         
         if reverse {
@@ -75,7 +75,7 @@ class TriangleShapeLayer: CAShapeLayer {
     func secondPoint(position: CGPoint, size: CGFloat, flip: Bool = false, reverse: Bool = false)-> CGPoint {
         guard let secondPosition = position as CGPoint?,
               let triangleSize = size as CGFloat? else {
-            return CGPoint(x: CGFloat(0), y: CGFloat(0))
+            return CGPoint.zero
         }
         
         if reverse {
@@ -104,7 +104,7 @@ class TriangleShapeLayer: CAShapeLayer {
     func thirdPoint(position: CGPoint, size: CGFloat, flip: Bool = false, reverse: Bool = false)-> CGPoint {
         guard let thirdPosition = position as CGPoint?,
               let triangleSize = size as CGFloat? else {
-                return CGPoint(x: CGFloat(0), y: CGFloat(0))
+                return CGPoint.zero
         }
         
         

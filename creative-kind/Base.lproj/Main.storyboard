@@ -22,9 +22,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-aX-Xox">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-aX-Xox" customClass="SquareView" customModule="creative_kind" customModuleProvider="target">
                                 <rect key="frame" x="10" y="30" width="300" height="300"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.40559457539999999" green="0.68645696990000005" blue="0.27137155769999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="500" constant="100" id="PSa-vd-sm3"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="100" id="T4Z-V1-6KL"/>
@@ -40,7 +40,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="squareView" destination="DC8-aX-Xox" id="gLL-Tx-w8L"/>
+                        <outlet property="squareContainerView" destination="DC8-aX-Xox" id="3XZ-JO-LGc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
