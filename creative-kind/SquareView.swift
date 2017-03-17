@@ -52,6 +52,8 @@ class SquareView: UIView {
                 return
             }
             
+            // TODO: Find the missing lines
+            
             // Create a layer for each path
             let shape = ColorShapeLayer()
             shape.id = id
