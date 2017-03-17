@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>PocketSVG.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-creative-kind.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-creative-kindTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-creative-kindUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5616786596EAA7D37F39A75CCE55FB95</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D98986199D4F04C546E0E25C7DC731EF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E43D75739AE3376B4FCA92BDA0EDBC53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F36431F928956301EF16383FEE5B37D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
