@@ -11,7 +11,11 @@ import PocketSVG
 
 class SquareView: UIView {
     
+    // Properties
+    var initialized: Bool = false
     var pathsBoundingBox: CGRect = CGRect.zero
+    var selectedShapes: [ColorShapeLayer] = []
+    var delegate: SquareViewDelegate?
     
     func fitGrid(frame: CGRect) {
         
@@ -33,8 +37,24 @@ class SquareView: UIView {
         
         for path in paths {
             
+            // Make sure paths have SVG attributes and an id
+            guard let svgAttributes = path.svgAttributes as [String: Any]?,
+                  let id = svgAttributes["id"] as? String else {
+                return
+            }
+            
+            // TODO: Find the big square and either:
+            // - remove it
+            // - group it with lines
+            // - use it to set pathsBoundingBox
+            if id == "lines" {
+                self.pathsBoundingBox = path.cgPath.boundingBox
+                return
+            }
+            
             // Create a layer for each path
             let shape = ColorShapeLayer()
+            shape.id = id
             
             // Constraints and position
             shape.frame = path.cgPath.boundingBox
@@ -42,7 +62,7 @@ class SquareView: UIView {
             shape.path = path.cgPath
             
             // Combine paths to figure out the final dimensions of the layer (HELP there's got to be a better way?)
-            self.pathsBoundingBox = self.pathsBoundingBox.union(path.cgPath.boundingBox)
+//            self.pathsBoundingBox = self.pathsBoundingBox.union(path.cgPath.boundingBox)
             
             // Default Settings
             var strokeWidth = CGFloat(0.5)
@@ -50,10 +70,10 @@ class SquareView: UIView {
             var fillColor = UIColor.white.cgColor
             
             // Inspect the SVG Path Attributes
-            print("path.svgAttributes = \(path.svgAttributes)")
+//            print("path.svgAttributes = \(path.svgAttributes)")
             
             if let strokeValue = path.svgAttributes["stroke-width"] as? String,
-                let strokeN = NumberFormatter().number(from: strokeValue) {
+               let strokeN = NumberFormatter().number(from: strokeValue) {
                 strokeWidth = CGFloat(strokeN)
             }
             
@@ -66,12 +86,52 @@ class SquareView: UIView {
             }
             
             // Set display properties
+            shape.borderWidth = 0
             shape.lineWidth = strokeWidth
             shape.strokeColor = strokeColor
             shape.fillColor = fillColor
             
             // Add shape to the layer hierarchy
             self.layer.addSublayer(shape)
+        }
+        
+    }
+    
+    func setupTapHandler() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapGestureRecognizer)
+        self.isUserInteractionEnabled = true
+    }
+    
+    func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
+        guard let touch = gestureRecognizer.location(in: self) as CGPoint?,
+              let layers = self.layer.sublayers as! [ColorShapeLayer]? else {
+                return
+        }
+        
+        for layer in layers {
+            guard let hitLayer = layer.hitTest(touch) else {
+                continue
+            }
+            
+            print("Shape layer tapped: \(hitLayer.id)")
+            
+            hitLayer.selectToggle()
+            
+            if hitLayer.selected {
+                self.selectedShapes.append(hitLayer)
+                continue
+            }
+            
+            if let index = self.selectedShapes.index(of: hitLayer) {
+                self.selectedShapes.remove(at: index)
+            }
+        }
+        
+        if let delegate = self.delegate {
+            delegate.selectShapes(shapes: self.selectedShapes)
         }
         
     }
