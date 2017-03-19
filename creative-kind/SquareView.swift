@@ -68,7 +68,7 @@ class SquareView: UIView {
             
             // Default Settings
             var strokeWidth = CGFloat(0.5)
-            var strokeColor = UIColor.black.cgColor
+            var strokeColor = UIColor.lightGray.cgColor
             var fillColor = UIColor.white.cgColor
             
             // Inspect the SVG Path Attributes
@@ -100,14 +100,13 @@ class SquareView: UIView {
     }
     
     func setupTapHandler() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-        tapGestureRecognizer.numberOfTapsRequired = 1
+        let tapGestureRecognizer = SingleTouchDownGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
         self.isUserInteractionEnabled = true
     }
     
-    func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
+    func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) {
         guard let touch = gestureRecognizer.location(in: self) as CGPoint?,
               let layers = self.layer.sublayers as! [ColorShapeLayer]? else {
                 return
