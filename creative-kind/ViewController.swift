@@ -10,7 +10,7 @@ import UIKit
 
 private let maxOverscroll: CGFloat = -50
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
+class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
     // Outlets
     @IBOutlet var squareContainerView: UIView!
     @IBOutlet var colorPaletteView: UICollectionView!

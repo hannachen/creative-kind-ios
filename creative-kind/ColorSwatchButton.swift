@@ -47,16 +47,4 @@ class ColorSwatchButton: UIButton {
         // Remove image for normal state
         self.setImage(nil, for: .normal)
     }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.layoutColorSwatch()
-    }
-    
-    
-    private func layoutColorSwatch() {
-        if let color = self.color {
-            self.layer.borderColor = color.darkerColor(percent: 0.5).cgColor
-        }
-    }
 }

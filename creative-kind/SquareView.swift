@@ -73,43 +73,8 @@ class SquareView: UIView {
             
             // Create a layer for each path
             let shape = ColorShapeLayer()
-            shape.id = id
-            
-            // Constraints and position
-            shape.frame = path.cgPath.boundingBox
-            shape.bounds = path.bounds
-            shape.path = path.cgPath
-            
-            // Combine paths to figure out the final dimensions of the layer (HELP there's got to be a better way?)
-//            self.pathsBoundingBox = self.pathsBoundingBox.union(path.cgPath.boundingBox)
-            
-            // Default Settings
-            var strokeWidth = CGFloat(0.5)
-            var strokeColor = UIColor.lightGray.cgColor
-            var fillColor = UIColor.white.cgColor
-            
-            // Inspect the SVG Path Attributes
-//            print("path.svgAttributes = \(path.svgAttributes)")
-            
-            if let strokeValue = path.svgAttributes["stroke-width"] as? String,
-               let strokeN = NumberFormatter().number(from: strokeValue) {
-                strokeWidth = CGFloat(strokeN)
-            }
-            
-            if let strokeValue = path.svgAttributes["stroke"] {
-                strokeColor = strokeValue as! CGColor
-            }
-            
-            if let fillColorVal = path.svgAttributes["fill"] {
-                fillColor = fillColorVal as! CGColor
-            }
-            
-            // Set display properties
-            shape.borderWidth = 0
-            shape.lineWidth = strokeWidth
-            shape.strokeColor = strokeColor
-            shape.fillColor = fillColor
-            
+            shape.setupShapeFromPath(id, path: path)
+                        
             // Add shape to the layer hierarchy
             self.layer.addSublayer(shape)
         }
@@ -120,7 +85,6 @@ class SquareView: UIView {
         let tapGestureRecognizer = SingleTouchDownGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
-        self.isUserInteractionEnabled = true
     }
     
     func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) {
@@ -133,16 +97,11 @@ class SquareView: UIView {
             guard let hitLayer = layer.hitTest(touch) else {
                 continue
             }
-            
 //            print("Shape layer tapped: \(hitLayer.id)")
-            
-            hitLayer.selectToggle()
-            
-            if hitLayer.selected {
+            if hitLayer.selectToggle() {
                 self.selectedShapes.append(hitLayer)
                 continue
             }
-            
             if let index = self.selectedShapes.index(of: hitLayer) {
                 self.selectedShapes.remove(at: index)
             }
@@ -152,9 +111,13 @@ class SquareView: UIView {
             delegate.selectShapes(shapes: self.selectedShapes)
             delegate.selectDidChange()
         }
-        
     }
     
+    /**
+     Apply color to all selected shapes
+     
+     :param: color
+     */
     func applyColor(_ color: UIColor) {
         for shape in self.selectedShapes {
             shape.applyColor(color)
