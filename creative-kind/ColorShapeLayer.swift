@@ -9,20 +9,22 @@
 import UIKit
 
 class ColorShapeLayer: CAShapeLayer {
-    
+    // Properties
     var id: String?
     var selected: Bool = false
     var color: UIColor?
+    
     
     // MARK: Overrides
     
     override func hitTest(_ p: CGPoint) -> ColorShapeLayer? {
         guard let shapePath = self.path,
               shapePath.contains(p) else {
-                return nil
+            return nil
         }
         return self
     }
+    
     
     func selectToggle() {
         if self.selected {

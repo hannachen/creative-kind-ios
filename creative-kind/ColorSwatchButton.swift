@@ -39,7 +39,6 @@ class ColorSwatchButton: UIButton {
         self.clipsToBounds = true
         self.imageEdgeInsets = UIEdgeInsetsMake(swatchImagePadding,swatchImagePadding,swatchImagePadding,swatchImagePadding)
         self.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        self.imageView?.tintColor = UIColor.white
         
         // Add a paintbrush to the button
         let image = #imageLiteral(resourceName: "paintbrush").withRenderingMode(.alwaysTemplate)

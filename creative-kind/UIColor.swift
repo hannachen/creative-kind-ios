@@ -48,4 +48,22 @@ extension UIColor {
             return self
         }
     }
+    
+    /*
+     Adopted from: http://stackoverflow.com/questions/2509443/check-if-uicolor-is-dark-or-bright
+    */
+    func isLight() -> Bool {
+        guard let components = self.cgColor.components as [CGFloat?]?,
+              let r = components[0],
+              let g = components[1],
+              let b = components[2] else {
+            return false
+        }
+        let brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000
+        if brightness < 0.5 {
+            return false
+        } else {
+            return true
+        }
+    }
 }
