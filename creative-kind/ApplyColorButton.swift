@@ -33,7 +33,7 @@ class ApplyColorButton: UIButton {
         self.setImage(checkmark, for: .normal)
         
         // Add paintbucket image to the button
-        let paintImage = #imageLiteral(resourceName: "paintbrush").withRenderingMode(.alwaysTemplate)
+        let paintImage = #imageLiteral(resourceName: "paintbucket").withRenderingMode(.alwaysTemplate)
         self.setImage(paintImage, for: ColorPaletteButtonControlState.paintMode)
     }
     
