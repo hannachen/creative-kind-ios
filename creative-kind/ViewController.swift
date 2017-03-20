@@ -10,7 +10,7 @@ import UIKit
 
 private let maxOverscroll: CGFloat = -50
 
-class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
     // Outlets
     @IBOutlet var squareContainerView: UIView!
     @IBOutlet var colorPaletteView: UICollectionView!
@@ -26,21 +26,19 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     var selectedColorSwatch: Int = 0 // Always select the first color swatch by default
     var paintMode: Bool = false
     
-    // MARK: Overrides
-    
     // Lock orientation
-    
     override var shouldAutorotate: Bool {
         return false
     }
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
-    
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.portrait
     }
+    
+    
+    // MARK: Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,11 +64,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalColors: CGFloat = CGFloat(self.colorPaletteColumns)
-        return CGSize(width: self.colorPaletteView.frame.width/totalColors, height: self.colorPaletteView.frame.height)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.colorPaletteColumns
     }
@@ -86,6 +79,9 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             cell.delegate = self
             cell.painting = self.paintMode
             
+            // Reset selection
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
+            
             // Set cell button
             cell.setupCell()
             return cell
@@ -99,14 +95,37 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             return cell
         }
         
-        cell.delegate = self
         cell.painting = self.paintMode
-        cell.selectedSwatch = self.selectedColorSwatch == indexPath.row
+        cell.isSelected = self.selectedColorSwatch == indexPath.row
         
         // Set cell button
         cell.setupCellWith(color)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        // Last cell: ignore
+        if indexPath.row + 1 == self.colorPaletteColumns {
+            return false
+        }
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedColorSwatch = indexPath.row
+        
+        let cell: ColorSwatchViewCell = collectionView.cellForItem(at: indexPath) as! ColorSwatchViewCell
+        guard let color = cell.color else {
+            return
+        }
+        collectionView.reloadData()
+        self.squareView.applyColor(color)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let totalColors: CGFloat = CGFloat(self.colorPaletteColumns)
+        return CGSize(width: self.colorPaletteView.frame.width/totalColors, height: self.colorPaletteView.frame.height)
     }
     
     
@@ -139,7 +158,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     // MARK: SquareViewDelegate
     
     func selectShapes(shapes: [ColorShapeLayer]) {
-        selectedLabel.text = "\(shapes.count) shapes selected"
         if !self.paintMode {
             return
         }
@@ -149,47 +167,32 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         self.squareView.clearSelected()
     }
     
-    
-    // MARK: ColorPaletteViewCellDelegate
-    
-    func clickColorButton(_ cell: ColorSwatchViewCell) {
-        guard let indexPath = self.colorPaletteView.indexPath(for: cell),
-              let color = self.colors[indexPath.row] as UIColor? else {
-            return
-        }
-        self.selectedColorSwatch = indexPath.row
-        self.squareView.applyColor(color)
-        self.colorPaletteView.reloadData()
-    }
-    
-    func singleTapApplyColorButton() {
-        self.clearSelectedShapes()
-    }
-    
-    func tripleTapApplyColorButton() {
-        if self.togglePaintMode() {
-            print("Paint mode")
-        } else {
-            print("Select mode")
-            
-            self.selectedColorSwatch = 0
-        }
-        self.clearSelectedShapes()
-        self.colorPaletteView.reloadData()
-    }
-    
-    
-    func clearSelectedShapes() {
-        self.squareView.clearSelected()
+    func selectDidChange() {
         selectedLabel.text = "\(self.squareView.selectedShapes.count) shapes selected"
     }
     
-    func togglePaintMode() -> Bool {
+    
+    // MARK: ColorPaletteViewCellDelegate
+    
+    func singleTapApplyColorButton() {
+        self.squareView.clearSelected()
+    }
+    
+    func tripleTapApplyColorButton() {
+        if !self.togglePaintMode() {
+            self.selectedColorSwatch = 0
+        }
+        self.squareView.clearSelected()
+        self.colorPaletteView.reloadData()
+    }
+    
+    
+    private func togglePaintMode() -> Bool {
         self.paintMode = !self.paintMode
         return self.paintMode
     }
     
-    func layoutSaveButtons() {
+    private func layoutSaveButtons() {
         for button in self.saveButtons {
             // update save button constaints
             // Is there a better way to size buttons to be 50% of their container? Do I use Stack View? How do I use Stack View?

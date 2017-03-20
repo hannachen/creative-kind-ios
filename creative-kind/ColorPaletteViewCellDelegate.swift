@@ -10,8 +10,6 @@ import UIKit
 import Foundation
 
 protocol ColorPaletteViewCellDelegate {
-
-    func clickColorButton(_ cell: ColorSwatchViewCell)
     
     func singleTapApplyColorButton()
     

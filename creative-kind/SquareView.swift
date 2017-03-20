@@ -134,7 +134,7 @@ class SquareView: UIView {
                 continue
             }
             
-            print("Shape layer tapped: \(hitLayer.id)")
+//            print("Shape layer tapped: \(hitLayer.id)")
             
             hitLayer.selectToggle()
             
@@ -150,6 +150,7 @@ class SquareView: UIView {
         
         if let delegate = self.delegate {
             delegate.selectShapes(shapes: self.selectedShapes)
+            delegate.selectDidChange()
         }
         
     }
@@ -165,6 +166,10 @@ class SquareView: UIView {
             shape.deselect()
         }
         self.selectedShapes.removeAll()
+        guard let delegate = self.delegate else {
+            return
+        }
+        delegate.selectDidChange()
     }
 
 }
