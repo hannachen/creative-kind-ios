@@ -134,5 +134,19 @@ class SquareView: UIView {
         }
         delegate.selectDidChange()
     }
+    
+    func getData() -> [String: UIColor] {
+        var data: [String: UIColor] = [:]
+        guard let allShapes = self.layer.sublayers as? [ColorShapeLayer] else {
+            return data
+        }
+        for shape in allShapes {
+            guard let shapeId = shape.id else {
+                continue
+            }
+            data[shapeId] = shape.color != nil ? shape.color : UIColor.white
+        }
+        return data
+    }
 
 }

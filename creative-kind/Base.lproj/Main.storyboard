@@ -68,7 +68,7 @@
                                 </label>
                                 <cells>
                                     <collectionViewCell clipsSubviews="YES" contentMode="center" reuseIdentifier="swatch" id="lRe-qy-ubD" userLabel="Color Swatch View Cell" customClass="ColorSwatchViewCell" customModule="creative_kind" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="54" height="54"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="54" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
@@ -87,7 +87,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="apply" id="YMr-QT-3ar" userLabel="Apply Color View Cell" customClass="ApplyColorViewCell" customModule="creative_kind" customModuleProvider="target">
-                                        <rect key="frame" x="54" y="1" width="54" height="54"/>
+                                        <rect key="frame" x="54" y="0.5" width="54" height="54"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
@@ -109,7 +109,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZY-MV-DyN">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZY-MV-DyN">
                                 <rect key="frame" x="0.0" y="405" width="320" height="65"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKc-I4-Mmz" userLabel="Save Button">
@@ -117,8 +117,11 @@
                                         <state key="normal" title="Save Draft">
                                             <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="clickSaveButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dR1-HW-Vxt"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfY-Nt-RL3" userLabel="Submit Button">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfY-Nt-RL3" userLabel="Submit Button">
                                         <rect key="frame" x="220" y="0.0" width="100" height="65"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lxM-ae-YCl"/>
@@ -126,6 +129,9 @@
                                         <state key="normal" title="Submit Design">
                                             <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="clickSubmitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QFg-ga-8Fo"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

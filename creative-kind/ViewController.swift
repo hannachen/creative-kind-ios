@@ -49,12 +49,23 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         self.colorPaletteView.dataSource = self
         self.colorPaletteView.delegate = self
         
-//        self.layoutSaveButtons()
+        self.layoutSaveButtons()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // IBActions
+    
+    @IBAction func clickSaveButton(_ sender: Any) {
+        let data = self.squareView.getData()
+        print("SAVED DATA: \(data)")
+    }
+    
+    @IBAction func clickSubmitButton(_ sender: Any) {
     }
     
     
@@ -200,7 +211,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             let heightContraints = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.saveButtonsView.frame.height)
             NSLayoutConstraint.activate([heightContraints,widthContraints])
             button.setTitleColor(UIColor.lightGray, for: .disabled)
-            button.isEnabled = false
+//            button.isEnabled = false
         }
     }
 }
