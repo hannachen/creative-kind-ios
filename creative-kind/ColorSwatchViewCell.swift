@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DynamicColor
 
 private let colorButtonSize: CGFloat = 40
 
@@ -43,8 +44,8 @@ class ColorSwatchViewCell: UICollectionViewCell {
     func setupColorSwatchButton(_ color: UIColor) {
         self.colorSwatchButton.paintMode = self.painting
         self.colorSwatchButton.backgroundColor = color
-        self.colorSwatchButton.layer.borderColor = color.darkerColor(percent: 0.5).cgColor
+        self.colorSwatchButton.layer.borderColor = color.darkened(amount: 0.25).cgColor
         self.colorSwatchButton.imageView?.isHidden = !(self.isSelected && self.painting)
-        self.colorSwatchButton.imageView?.tintColor = color.isLight() ? UIColor.darkGray : UIColor.white
+        self.colorSwatchButton.imageView?.tintColor = color.isLight() ? color.darkened(amount: 0.25) : color.lighter(amount: 0.4)
     }
 }

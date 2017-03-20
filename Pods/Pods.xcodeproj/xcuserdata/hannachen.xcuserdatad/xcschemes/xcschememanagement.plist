@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>DynamicColor.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>PocketSVG.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,7 +32,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5616786596EAA7D37F39A75CCE55FB95</key>
+		<key>19864AB8F7B8E9064740E008772C4404</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47A7D9C286E1EE4C411E4FEBF9DE9B23</key>
 		<dict>
 			<key>primary</key>
 			<true/>
