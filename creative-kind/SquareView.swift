@@ -12,19 +12,36 @@ import PocketSVG
 class SquareView: UIView {
     
     // Properties
-    var initialized: Bool = false
-    var pathsBoundingBox: CGRect = CGRect.zero
+    var pathsBoundingBox: CGRect = .zero
     var selectedShapes: [ColorShapeLayer] = []
     var delegate: SquareViewDelegate?
     
-    func fitGrid(frame: CGRect) {
+    
+    // MARK: Overrides
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
+        self.layer.backgroundColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderWidth = 1
+    }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        self.frame = self.bounds
+    }
+    
+    
+    func layoutSquareView(container: UIView) {
+        self.generateSquareFromSvg()
+        self.setupTapHandler()
+        self.fitGrid()
+    }
+    
+    func fitGrid() {
         let scaleFactor = CGFloat(self.frame.width / self.pathsBoundingBox.width)
         self.layer.transform = CATransform3DMakeScale(scaleFactor, scaleFactor, 1.0)
-        
-        // Re-position the grid
-        self.frame = frame
-        self.layer.frame = frame
     }
     
     func generateSquareFromSvg() {
@@ -109,7 +126,7 @@ class SquareView: UIView {
     func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) {
         guard let touch = gestureRecognizer.location(in: self) as CGPoint?,
               let layers = self.layer.sublayers as! [ColorShapeLayer]? else {
-                return
+            return
         }
         
         for layer in layers {
@@ -135,6 +152,19 @@ class SquareView: UIView {
             delegate.selectShapes(shapes: self.selectedShapes)
         }
         
+    }
+    
+    func applyColor(_ color: UIColor) {
+        for shape in self.selectedShapes {
+            shape.applyColor(color)
+        }
+    }
+    
+    func clearSelected() {
+        for shape in self.selectedShapes {
+            shape.deselect()
+        }
+        self.selectedShapes.removeAll()
     }
 
 }

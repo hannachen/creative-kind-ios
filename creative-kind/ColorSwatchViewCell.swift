@@ -17,6 +17,9 @@ class ColorSwatchViewCell: UICollectionViewCell {
     // Properties
     var color: UIColor?
     var delegate: ColorPaletteViewCellDelegate?
+    var painting: Bool = false
+    var selectedSwatch: Bool = false
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -25,27 +28,30 @@ class ColorSwatchViewCell: UICollectionViewCell {
         self.colorSwatchButton.layer.cornerRadius = 0.5 * self.colorSwatchButton.bounds.size.width
     }
     
-    func setupCellWith(_ color: UIColor) {
-        self.color = color
-        self.setupColorSwatchButton(color)
-    }
-    
-    func setupColorSwatchButton(_ color: UIColor) {
-        self.colorSwatchButton.layer.borderColor = color.darkerColor(percent: 0.5).cgColor
-        self.colorSwatchButton.layer.borderWidth = 3
-        self.colorSwatchButton.clipsToBounds = true
-        self.colorSwatchButton.backgroundColor = color
-        self.colorSwatchButton.addTarget(self, action: #selector(touchColorButton), for: UIControlEvents.touchDown)
-    }
-    
-    
     // MARK: ApplyColorViewCellDelegate
 
     func touchColorButton(_ sender: ColorSwatchButton) {
-        guard let delegate = self.delegate,
-              let color = self.color else {
+        guard let delegate = self.delegate else {
             return
         }
-        delegate.clickColorButton(color)
+        delegate.clickColorButton(self)
+    }
+
+    
+    func setupCellWith(_ color: UIColor) {
+        self.color = color
+        self.setupColorSwatchButton(color)
+        print("paint mode? \(self.painting)")
+    }
+    
+    func setupColorSwatchButton(_ color: UIColor) {
+        self.colorSwatchButton.paintMode = self.painting
+        self.colorSwatchButton.backgroundColor = color
+        self.colorSwatchButton.layer.borderColor = color.darkerColor(percent: 0.5).cgColor
+        self.colorSwatchButton.addTarget(self, action: #selector(touchColorButton), for: UIControlEvents.touchDown)
+        self.colorSwatchButton.imageView?.isHidden = !(self.selectedSwatch && self.painting)
+        
+        print("selected? \(self.selectedSwatch)")
+        print("should hide icon? \(!self.selectedSwatch)")
     }
 }

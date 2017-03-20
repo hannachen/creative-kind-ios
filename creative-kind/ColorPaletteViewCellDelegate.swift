@@ -11,7 +11,7 @@ import Foundation
 
 protocol ColorPaletteViewCellDelegate {
 
-    func clickColorButton(_ color: UIColor)
+    func clickColorButton(_ cell: ColorSwatchViewCell)
     
     func singleTapApplyColorButton()
     

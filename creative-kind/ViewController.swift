@@ -8,23 +8,23 @@
 
 import UIKit
 
-private let reuseIdentifier = "swatch"
 private let maxOverscroll: CGFloat = -50
 
 class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
     // Outlets
     @IBOutlet var squareContainerView: UIView!
-    @IBOutlet var colorPaletteView: ColorPaletteCollectionView!
+    @IBOutlet var colorPaletteView: UICollectionView!
     @IBOutlet var selectedLabel: UILabel!
     @IBOutlet var saveButtonsView: UIView!
     @IBOutlet var saveButtons: [UIButton]!
+    @IBOutlet var squareView: SquareView!
     
     // Properties
-    var squareView: SquareView = SquareView()
     var colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue]
     var colorPaletteColumns: Int = 6 // Number of colors plus the last button
-    var colorPaletteOffset: CGPoint = CGPoint.zero
-    var selectedColor: UIColor?
+    var colorPaletteOffset: CGPoint = .zero
+    var selectedColorSwatch: Int = 0 // Always select the first color swatch by default
+    var paintMode: Bool = false
     
     // MARK: Overrides
     
@@ -45,26 +45,13 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(self.squareView)
-        
-        self.squareView.layer.backgroundColor = UIColor.lightGray.cgColor
-        self.squareView.layer.borderColor = UIColor.lightGray.cgColor
-        self.squareView.layer.borderWidth = 1
-        
         self.squareView.delegate = self
-        self.initSquareView()
+        self.squareView.layoutSquareView(container: self.squareContainerView)
         
         self.colorPaletteView.dataSource = self
         self.colorPaletteView.delegate = self
         
 //        self.layoutSaveButtons()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    override func viewWillLayoutSubviews() {
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,6 +84,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             let cell: ApplyColorViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "apply", for: indexPath) as! ApplyColorViewCell
             
             cell.delegate = self
+            cell.painting = self.paintMode
             
             // Set cell button
             cell.setupCell()
@@ -112,6 +100,8 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         }
         
         cell.delegate = self
+        cell.painting = self.paintMode
+        cell.selectedSwatch = self.selectedColorSwatch == indexPath.row
         
         // Set cell button
         cell.setupCellWith(color)
@@ -133,7 +123,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         
         if (offset.x > self.colorPaletteOffset.x) {
             // scrolling to the right, reset offset
-            scrollView.setContentOffset(CGPoint.zero, animated: false)
+            scrollView.setContentOffset(.zero, animated: false)
             return
         }
         
@@ -149,62 +139,54 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     // MARK: SquareViewDelegate
     
     func selectShapes(shapes: [ColorShapeLayer]) {
-        if self.colorPaletteView.paintMode {
-            for shape in self.squareView.selectedShapes {
-                if let color = self.colorPaletteView.paintModeColor {
-                    shape.applyColor(color)
-                }
-                shape.deselect()
-            }
-            self.squareView.selectedShapes.removeAll()
+        selectedLabel.text = "\(shapes.count) shapes selected"
+        if !self.paintMode {
             return
         }
-        
-        selectedLabel.text = "\(shapes.count) shapes selected"
+        if let color = self.colors[self.selectedColorSwatch] as UIColor? {
+            self.squareView.applyColor(color)
+        }
+        self.squareView.clearSelected()
     }
     
     
     // MARK: ColorPaletteViewCellDelegate
     
-    func clickColorButton(_ color: UIColor) {
-        self.selectedColor = color
-        if self.colorPaletteView.paintMode {
-            self.colorPaletteView.paintColor(color)
+    func clickColorButton(_ cell: ColorSwatchViewCell) {
+        guard let indexPath = self.colorPaletteView.indexPath(for: cell),
+              let color = self.colors[indexPath.row] as UIColor? else {
             return
         }
-        for shape in self.squareView.selectedShapes {
-            shape.applyColor(color)
-        }
+        self.selectedColorSwatch = indexPath.row
+        self.squareView.applyColor(color)
+        self.colorPaletteView.reloadData()
     }
     
     func singleTapApplyColorButton() {
-        self.clearSelected()
+        self.clearSelectedShapes()
     }
     
     func tripleTapApplyColorButton() {
-        if self.colorPaletteView.togglePaintMode(),
-           let color = self.selectedColor {
-            self.colorPaletteView.paintColor(color)
+        if self.togglePaintMode() {
+            print("Paint mode")
+        } else {
+            print("Select mode")
+            
+            self.selectedColorSwatch = 0
         }
-        self.selectedColor = nil
-        self.clearSelected()
-        print("Toggle paint mode")
+        self.clearSelectedShapes()
+        self.colorPaletteView.reloadData()
     }
     
     
+    func clearSelectedShapes() {
+        self.squareView.clearSelected()
+        selectedLabel.text = "\(self.squareView.selectedShapes.count) shapes selected"
+    }
     
-    func initSquareView() {
-        // HELP: Where to put the code below so that it only runs once?
-        if !self.squareView.initialized {
-            
-            self.squareView.frame = self.squareContainerView.frame
-            self.squareView.bounds = self.squareContainerView.bounds
-            
-            self.squareView.generateSquareFromSvg()
-            self.squareView.fitGrid(frame: self.squareContainerView.frame)
-            self.squareView.setupTapHandler()
-            self.squareView.initialized = true
-        }
+    func togglePaintMode() -> Bool {
+        self.paintMode = !self.paintMode
+        return self.paintMode
     }
     
     func layoutSaveButtons() {
@@ -217,14 +199,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             button.setTitleColor(UIColor.lightGray, for: .disabled)
             button.isEnabled = false
         }
-    }
-    
-    func clearSelected() {
-        for shape in self.squareView.selectedShapes {
-            shape.deselect()
-        }
-        self.squareView.selectedShapes.removeAll()
-        selectedLabel.text = "\(self.squareView.selectedShapes.count) shapes selected"
     }
 }
 

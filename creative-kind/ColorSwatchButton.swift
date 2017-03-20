@@ -8,9 +8,28 @@
 
 import UIKit
 
+private let swatchImagePadding: CGFloat = 5
+
 class ColorSwatchButton: UIButton {
-    
+    // Properties
     var color: UIColor?
+    var paintMode: Bool = false {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    
+    // MARK: Overrides
+    
+    override var state: UIControlState {
+        if paintMode {
+            var options = ColorPaletteButtonControlState.paintMode
+            options.insert(super.state)
+            return options
+        }
+        return super.state
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -18,10 +37,17 @@ class ColorSwatchButton: UIButton {
         self.layer.cornerRadius = 0.5 * self.bounds.size.width
         self.layer.borderWidth = 3
         self.clipsToBounds = true
-        self.backgroundColor = color
+        self.imageEdgeInsets = UIEdgeInsetsMake(swatchImagePadding,swatchImagePadding,swatchImagePadding,swatchImagePadding)
+        self.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        self.imageView?.tintColor = UIColor.white
+        
+        // Add a paintbrush to the button
+        let image = #imageLiteral(resourceName: "paintbrush").withRenderingMode(.alwaysTemplate)
+        self.setImage(image, for: ColorPaletteButtonControlState.paintMode)
+        
+        // Remove image for normal state
+        self.setImage(nil, for: .normal)
     }
-    
-    // MARK: Overrides
     
     override public func layoutSubviews() {
         super.layoutSubviews()

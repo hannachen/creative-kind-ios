@@ -25,14 +25,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-aX-Xox" customClass="SquareView" customModule="creative_kind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="30" width="320" height="320"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bht-my-Hde" userLabel="Square View" customClass="SquareView" customModule="creative_kind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="Bht-my-Hde" firstAttribute="leading" secondItem="DC8-aX-Xox" secondAttribute="leading" id="J55-dz-vGx"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="500" constant="320" id="PSa-vd-sm3"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="320" id="T4Z-V1-6KL"/>
                                     <constraint firstAttribute="width" secondItem="DC8-aX-Xox" secondAttribute="height" multiplier="1:1" id="XVu-Qf-JHI"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bht-my-Hde" secondAttribute="bottom" id="cd2-2C-2DC"/>
+                                    <constraint firstItem="Bht-my-Hde" firstAttribute="top" secondItem="DC8-aX-Xox" secondAttribute="top" id="tO4-gi-Qze"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bht-my-Hde" secondAttribute="trailing" id="ySM-uQ-bFV"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dbw-d3-PwA" userLabel="Color Palette Collection" customClass="ColorPaletteCollectionView" customModule="creative_kind" customModuleProvider="target">
+                            <collectionView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dbw-d3-PwA" userLabel="Color Palette Collection">
                                 <rect key="frame" x="0.0" y="350" width="320" height="55"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -84,7 +93,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xA5-p0-r7S">
+                                                <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xA5-p0-r7S" customClass="ApplyColorButton" customModule="creative_kind" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -131,7 +140,7 @@
                                     <constraint firstAttribute="width" secondItem="xZY-MV-DyN" secondAttribute="height" multiplier="64:13" priority="300" id="zlA-D1-4vv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# of shapes selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3C-QB-rzn">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 shapes selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3C-QB-rzn">
                                 <rect key="frame" x="10" y="480" width="300" height="73"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="h7w-Xp-3bO"/>
@@ -165,6 +174,7 @@
                         <outlet property="saveButtonsView" destination="xZY-MV-DyN" id="Vk9-H3-TYd"/>
                         <outlet property="selectedLabel" destination="i3C-QB-rzn" id="bZD-RS-ZwL"/>
                         <outlet property="squareContainerView" destination="DC8-aX-Xox" id="3XZ-JO-LGc"/>
+                        <outlet property="squareView" destination="Bht-my-Hde" id="Q8Y-kg-dhd"/>
                         <outletCollection property="saveButtons" destination="AfY-Nt-RL3" collectionClass="NSMutableArray" id="dCB-6N-Acc"/>
                         <outletCollection property="saveButtons" destination="dKc-I4-Mmz" collectionClass="NSMutableArray" id="KEt-Ah-Buc"/>
                     </connections>

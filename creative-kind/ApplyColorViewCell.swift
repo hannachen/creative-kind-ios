@@ -8,44 +8,21 @@
 
 import UIKit
 
-private let buttonImagePadding: CGFloat = 10
-
 class ApplyColorViewCell: UICollectionViewCell {
     // Outlets
-    @IBOutlet var applyColorButton: UIButton!
+    @IBOutlet var applyColorButton: ApplyColorButton!
     
     // Properties
+    var painting: Bool = false
     var delegate: ColorPaletteViewCellDelegate?
+    
+    
+    // MARK: Overrides
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         self.applyColorButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: self.frame.width, height: self.frame.height))
-    }
-    
-    func setupCell() {
-        self.setupApplyColorButton()
-    }
-    
-    /*
-     Add and style checkmark image, attach events
-     */
-    func setupApplyColorButton() {
-        // Add a checkmark to the button
-        let image = #imageLiteral(resourceName: "checkmark").withRenderingMode(.alwaysTemplate)
-        self.applyColorButton.setImage(image, for: .normal)
-        self.applyColorButton.imageEdgeInsets = UIEdgeInsetsMake(buttonImagePadding,buttonImagePadding,buttonImagePadding,buttonImagePadding)
-        self.applyColorButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        self.applyColorButton.imageView?.tintColor = UIColor.gray
-        
-        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTapButton))
-        let tripleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tripleTapButton))
-        
-        singleTap.numberOfTapsRequired = 1
-        tripleTap.numberOfTapsRequired = 3
-        
-        self.applyColorButton.addGestureRecognizer(singleTap)
-        self.applyColorButton.addGestureRecognizer(tripleTap)
     }
     
     
@@ -63,5 +40,27 @@ class ApplyColorViewCell: UICollectionViewCell {
             return
         }
         delegate.tripleTapApplyColorButton()
+    }
+    
+    
+    func setupCell() {
+        self.setupApplyColorButton()
+    }
+    
+    /*
+     Add and style checkmark image, attach events
+     */
+    func setupApplyColorButton() {
+        
+        self.applyColorButton.paintMode = self.painting
+        
+        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTapButton))
+        let tripleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tripleTapButton))
+        
+        singleTap.numberOfTapsRequired = 1
+        tripleTap.numberOfTapsRequired = 3
+        
+        self.applyColorButton.addGestureRecognizer(singleTap)
+        self.applyColorButton.addGestureRecognizer(tripleTap)
     }
 }
