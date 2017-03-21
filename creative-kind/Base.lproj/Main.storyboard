@@ -113,7 +113,7 @@
                                 <rect key="frame" x="0.0" y="405" width="320" height="65"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKc-I4-Mmz" userLabel="Save Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="65"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="65"/>
                                         <state key="normal" title="Save Draft">
                                             <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -122,10 +122,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfY-Nt-RL3" userLabel="Submit Button">
-                                        <rect key="frame" x="220" y="0.0" width="100" height="65"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lxM-ae-YCl"/>
-                                        </constraints>
+                                        <rect key="frame" x="160" y="0.0" width="160" height="65"/>
                                         <state key="normal" title="Submit Design">
                                             <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -141,6 +138,8 @@
                                     <constraint firstAttribute="bottom" secondItem="AfY-Nt-RL3" secondAttribute="bottom" id="LlN-AI-v2g"/>
                                     <constraint firstAttribute="bottom" secondItem="dKc-I4-Mmz" secondAttribute="bottom" id="RQ2-9U-7Uf"/>
                                     <constraint firstItem="dKc-I4-Mmz" firstAttribute="leading" secondItem="xZY-MV-DyN" secondAttribute="leading" multiplier="0.5" id="ZYY-vE-ll2"/>
+                                    <constraint firstItem="AfY-Nt-RL3" firstAttribute="width" secondItem="dKc-I4-Mmz" secondAttribute="width" id="d9d-gx-t9K"/>
+                                    <constraint firstItem="AfY-Nt-RL3" firstAttribute="leading" secondItem="dKc-I4-Mmz" secondAttribute="trailing" id="dXU-39-R1U"/>
                                     <constraint firstItem="dKc-I4-Mmz" firstAttribute="top" secondItem="xZY-MV-DyN" secondAttribute="top" id="eXr-UR-wel"/>
                                     <constraint firstAttribute="trailing" secondItem="AfY-Nt-RL3" secondAttribute="trailing" id="sr1-pq-xfi"/>
                                     <constraint firstAttribute="width" secondItem="xZY-MV-DyN" secondAttribute="height" multiplier="64:13" priority="300" id="zlA-D1-4vv"/>

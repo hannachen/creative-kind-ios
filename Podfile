@@ -6,8 +6,9 @@ target 'creative-kind' do
   use_frameworks!
 
   # Pods for creative-kind
-  pod 'PocketSVG'
+  pod 'Alamofire'
   pod 'DynamicColor'
+  pod 'PocketSVG'
 
   target 'creative-kindTests' do
     inherit! :search_paths

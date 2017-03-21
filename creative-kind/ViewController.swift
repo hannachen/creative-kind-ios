@@ -48,8 +48,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         
         self.colorPaletteView.dataSource = self
         self.colorPaletteView.delegate = self
-        
-        self.layoutSaveButtons()
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,6 +77,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return self.colorPaletteColumns
     }
     
+    // TODO: Use footer for the "apply colors"/"paint" button
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // Last cell: deselect all/apply color
@@ -134,6 +133,9 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         self.squareView.applyColor(color)
     }
     
+    
+    // MARK: UICollectionViewDelegateFlowLayout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let totalColors: CGFloat = CGFloat(self.colorPaletteColumns)
         return CGSize(width: self.colorPaletteView.frame.width/totalColors, height: self.colorPaletteView.frame.height)
@@ -158,11 +160,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         }
         
         // Handle overscroll on the left side
-        if offset.x < maxOverscroll {
-            scrollView.backgroundColor = UIColor.darkGray
-        } else {
-            scrollView.backgroundColor = UIColor.lightGray
-        }
+        scrollView.backgroundColor = offset.x < maxOverscroll ? UIColor.darkGray : UIColor.lightGray
     }
     
     
@@ -201,18 +199,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     private func togglePaintMode() -> Bool {
         self.paintMode = !self.paintMode
         return self.paintMode
-    }
-    
-    private func layoutSaveButtons() {
-        for button in self.saveButtons {
-            // update save button constaints
-            // Is there a better way to size buttons to be 50% of their container? Do I use Stack View? How do I use Stack View?
-            let widthContraints =  NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.saveButtonsView.frame.width / 2)
-            let heightContraints = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.saveButtonsView.frame.height)
-            NSLayoutConstraint.activate([heightContraints,widthContraints])
-            button.setTitleColor(UIColor.lightGray, for: .disabled)
-//            button.isEnabled = false
-        }
     }
 }
 
