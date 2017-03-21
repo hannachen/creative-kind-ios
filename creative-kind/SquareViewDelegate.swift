@@ -10,7 +10,9 @@ import Foundation
 
 protocol SquareViewDelegate {
     
-    func selectShapes(shapes: [ColorShapeLayer])
+    func squareDidLoad(shapes: [ColorShapeLayer])
+    
+    func selectShape(shape: ColorShapeLayer)
 
     func selectDidChange()
 }

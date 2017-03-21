@@ -46,6 +46,7 @@ class ColorShapeLayer: CAShapeLayer {
         // Inspect the SVG Path Attributes
 //        print("path.svgAttributes = \(path.svgAttributes)")
         
+        // Try reading original svg path styles
         if let strokeValue = path.svgAttributes["stroke-width"] as? String,
             let strokeN = NumberFormatter().number(from: strokeValue) {
             strokeWidth = CGFloat(strokeN)
@@ -76,7 +77,7 @@ class ColorShapeLayer: CAShapeLayer {
     func select() {
         self.selected = true
         self.lineWidth = 1.5
-        self.strokeColor = UIColor.darkGray.cgColor
+        self.strokeColor = UIColor.darkGray.cgColor // TODO: Use color contrast to find a suitable selected border color
         self.opacity = 0.9
         self.zPosition = 1
     }

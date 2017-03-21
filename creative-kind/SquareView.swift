@@ -10,10 +10,8 @@ import UIKit
 import PocketSVG
 
 class SquareView: UIView {
-    
     // Properties
     var pathsBoundingBox: CGRect = .zero
-    var selectedShapes: [ColorShapeLayer] = []
     var delegate: SquareViewDelegate?
     
     
@@ -57,16 +55,16 @@ class SquareView: UIView {
             // Make sure paths have SVG attributes and an id
             guard let svgAttributes = path.svgAttributes as [String: Any]?,
                   let id = svgAttributes["id"] as? String else {
-                return
+                continue
             }
             
             // TODO: Find the big square and either:
             // - remove it
             // - group it with lines
             // - use it to set pathsBoundingBox
-            if id == "lines" {
+            if id == "lines" { // There's a rectangle in the SVG with the ID of "line", use it to figure out the size of the final layer
                 self.pathsBoundingBox = path.cgPath.boundingBox
-                return
+                continue // Don't add this shape to the layer or it'll get selected
             }
             
             // TODO: Find the missing lines
@@ -79,6 +77,11 @@ class SquareView: UIView {
             self.layer.addSublayer(shape)
         }
         
+        // Notify squareViewDelegate shapes have been added?
+        if let shapes = self.layer.sublayers as? [ColorShapeLayer],
+           let delegate = self.delegate {
+            delegate.squareDidLoad(shapes: shapes)
+        }
     }
     
     func setupTapHandler() {
@@ -97,56 +100,12 @@ class SquareView: UIView {
             guard let hitLayer = layer.hitTest(touch) else {
                 continue
             }
-//            print("Shape layer tapped: \(hitLayer.id)")
-            if hitLayer.selectToggle() {
-                self.selectedShapes.append(hitLayer)
-                continue
+            if let delegate = self.delegate {
+                delegate.selectShape(shape: hitLayer)
+                delegate.selectDidChange()
             }
-            if let index = self.selectedShapes.index(of: hitLayer) {
-                self.selectedShapes.remove(at: index)
-            }
-        }
-        
-        if let delegate = self.delegate {
-            delegate.selectShapes(shapes: self.selectedShapes)
-            delegate.selectDidChange()
-        }
-    }
-    
-    /**
-     Apply color to all selected shapes
-     
-     :param: color
-     */
-    func applyColor(_ color: UIColor) {
-        for shape in self.selectedShapes {
-            shape.applyColor(color)
-        }
-    }
-    
-    func clearSelected() {
-        for shape in self.selectedShapes {
-            shape.deselect()
-        }
-        self.selectedShapes.removeAll()
-        guard let delegate = self.delegate else {
             return
         }
-        delegate.selectDidChange()
-    }
-    
-    func getData() -> [String: UIColor] {
-        var data: [String: UIColor] = [:]
-        guard let allShapes = self.layer.sublayers as? [ColorShapeLayer] else {
-            return data
-        }
-        for shape in allShapes {
-            guard let shapeId = shape.id else {
-                continue
-            }
-            data[shapeId] = shape.color != nil ? shape.color : UIColor.white
-        }
-        return data
     }
 
 }

@@ -22,6 +22,7 @@
 		5D39025A1E7A33D5005A990C /* grid-default.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5D3902591E7A33D5005A990C /* grid-default.svg */; };
 		5D39025F1E7A3547005A990C /* ColorShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */; };
 		5D3902611E7A4032005A990C /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3902601E7A4032005A990C /* SquareView.swift */; };
+		5D4275031E80ACA300BC0F48 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4275021E80ACA300BC0F48 /* Square.swift */; };
 		5D500B401E7B9BA300BD26B6 /* SquareViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */; };
 		5D500B421E7BAB7300BD26B6 /* ColorSwatchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */; };
 		5D951EB71E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D951EB61E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift */; };
@@ -73,6 +74,7 @@
 		5D3902591E7A33D5005A990C /* grid-default.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "grid-default.svg"; path = "svg/grid-default.svg"; sourceTree = SOURCE_ROOT; };
 		5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorShapeLayer.swift; sourceTree = "<group>"; };
 		5D3902601E7A4032005A990C /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
+		5D4275021E80ACA300BC0F48 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareViewDelegate.swift; sourceTree = "<group>"; };
 		5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSwatchViewCell.swift; sourceTree = "<group>"; };
 		5D951EB61E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPaletteViewCellDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				5D951EB61E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift */,
 				5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */,
 				5D258CC41E7F036B00FA7ADC /* ApplyColorViewCell.swift */,
+				5D4275021E80ACA300BC0F48 /* Square.swift */,
 				5D3902601E7A4032005A990C /* SquareView.swift */,
 				5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */,
 				5DA7E97F1E7E7D68003F5E41 /* ColorSwatchButton.swift */,
@@ -506,6 +509,7 @@
 				5D0F92021E77A33500A80DD7 /* AppDelegate.swift in Sources */,
 				5D258CC51E7F036B00FA7ADC /* ApplyColorViewCell.swift in Sources */,
 				5DA7E97C1E7E50E4003F5E41 /* SingleTouchDownGestureRecognizer.swift in Sources */,
+				5D4275031E80ACA300BC0F48 /* Square.swift in Sources */,
 				5D951EB71E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift in Sources */,
 				5D26B8691E7DF78F00186813 /* UIColor.swift in Sources */,
 				5DA7E9801E7E7D68003F5E41 /* ColorSwatchButton.swift in Sources */,

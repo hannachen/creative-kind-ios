@@ -20,11 +20,13 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     @IBOutlet var squareView: SquareView!
     
     // Properties
+    var square: Square?
     var colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue]
     var colorPaletteColumns: Int = 6 // Number of colors plus the last button
     var colorPaletteOffset: CGPoint = .zero
     var selectedColorSwatch: Int = 0 // Always select the first color swatch by default
     var paintMode: Bool = false
+    
     
     // Lock orientation
     override var shouldAutorotate: Bool {
@@ -59,8 +61,13 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     // IBActions
     
     @IBAction func clickSaveButton(_ sender: Any) {
-        let data = self.squareView.getData()
+        guard let square = self.square else {
+            return
+        }
+        let data = square.getData()
         print("SAVED DATA: \(data)")
+        
+        // Convert data to a json object?
     }
     
     @IBAction func clickSubmitButton(_ sender: Any) {
@@ -126,11 +133,12 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         self.selectedColorSwatch = indexPath.row
         
         let cell: ColorSwatchViewCell = collectionView.cellForItem(at: indexPath) as! ColorSwatchViewCell
-        guard let color = cell.color else {
+        guard let color = cell.color,
+              let square = self.square else {
             return
         }
         collectionView.reloadData()
-        self.squareView.applyColor(color)
+        square.applyColor(color)
     }
     
     
@@ -148,11 +156,11 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         self.colorPaletteOffset = scrollView.contentOffset
     }
     
+    // TODO: Connect this action to something (change color palette set?)
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         // Disable overscroll on the right side
         let offset: CGPoint = scrollView.contentOffset
-        
         if (offset.x > self.colorPaletteOffset.x) {
             // scrolling to the right, reset offset
             scrollView.setContentOffset(.zero, animated: false)
@@ -166,36 +174,62 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     // MARK: SquareViewDelegate
     
-    func selectShapes(shapes: [ColorShapeLayer]) {
-        if !self.paintMode {
-            return
+    func squareDidLoad(shapes: [ColorShapeLayer]) {
+        self.square = Square(shapes: shapes)
+    }
+    
+    func selectShape(shape: ColorShapeLayer) {
+        guard let square = self.square else {
+            return // Don't do anything if square isn't initialized
         }
-        if let color = self.colors[self.selectedColorSwatch] as UIColor? {
-            self.squareView.applyColor(color)
+        
+        // Select/Deselect shapes
+        if shape.selectToggle() {
+            square.addShape(shape)
+        } else {
+            square.removeShape(shape)
         }
-        self.squareView.clearSelected()
+        
+        // Print mode
+        if self.paintMode {
+            if let color = self.colors[self.selectedColorSwatch] as UIColor? {
+                square.applyColor(color)
+            }
+            square.clearSelected()
+        }
     }
     
     func selectDidChange() {
-        selectedLabel.text = "\(self.squareView.selectedShapes.count) shapes selected"
+        guard let square = self.square else {
+            return
+        }
+        selectedLabel.text = "\(square.selectedShapes.count) shapes selected"
     }
     
     
     // MARK: ColorPaletteViewCellDelegate
     
     func singleTapApplyColorButton() {
-        self.squareView.clearSelected()
+        self.clearSquare()
     }
     
     func tripleTapApplyColorButton() {
         if !self.togglePaintMode() {
             self.selectedColorSwatch = 0
         }
-        self.squareView.clearSelected()
+        self.clearSquare()
         self.colorPaletteView.reloadData()
     }
     
-    
+
+    private func clearSquare() {
+        guard let square = self.square else {
+            return
+        }
+        square.clearSelected()
+        self.selectDidChange() // TODO: find a place to put this?
+    }
+
     private func togglePaintMode() -> Bool {
         self.paintMode = !self.paintMode
         return self.paintMode
