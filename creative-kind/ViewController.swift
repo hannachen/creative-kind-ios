@@ -161,7 +161,9 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         
         // Disable overscroll on the right side
         let offset: CGPoint = scrollView.contentOffset
+        
         if (offset.x > self.colorPaletteOffset.x) {
+            
             // scrolling to the right, reset offset
             scrollView.setContentOffset(.zero, animated: false)
             return
@@ -185,9 +187,9 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         
         // Select/Deselect shapes
         if shape.selectToggle() {
-            square.addShape(shape)
+            square.select(shape)
         } else {
-            square.removeShape(shape)
+            square.deselect(shape)
         }
         
         // Print mode
@@ -200,10 +202,11 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     }
     
     func selectDidChange() {
-        guard let square = self.square else {
+        guard let square = self.square,
+              let selectedShapes = square.selectedShapes() else {
             return
         }
-        selectedLabel.text = "\(square.selectedShapes.count) shapes selected"
+        selectedLabel.text = "\(selectedShapes.count) shapes selected"
     }
     
     
@@ -227,7 +230,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
             return
         }
         square.clearSelected()
-        self.selectDidChange() // TODO: find a place to put this?
+        self.selectDidChange() // TODO: find a better place for this?
     }
 
     private func togglePaintMode() -> Bool {

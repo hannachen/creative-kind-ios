@@ -11,32 +11,37 @@ import UIKit
 
 class Square {
     var shapes: [ColorShapeLayer]
-    var selectedShapes: [ColorShapeLayer] = []
     
     init(shapes: [ColorShapeLayer]) {
         self.shapes = shapes
     }
     
-    func addShape(_ shape: ColorShapeLayer) {
-        self.selectedShapes.append(shape)
+    func select(_ shape: ColorShapeLayer) -> Void {
+        self.findShape(shape)?.selected = true
     }
     
-    func removeShape(_ shape: ColorShapeLayer) {
-        if let index = self.selectedShapes.index(of: shape) {
-            self.selectedShapes.remove(at: index)
+    func deselect(_ shape: ColorShapeLayer) -> Void {
+        self.findShape(shape)?.selected = false
+    }
+    
+    func findShape(_ shape: ColorShapeLayer) -> ColorShapeLayer? {
+        if let index = self.shapes.index(of: shape) {
+            return self.shapes[index]
         }
+        return nil
+    }
+    
+    func selectedShapes() -> [ColorShapeLayer]? {
+        return self.shapes.filter{ $0.selected }
     }
     
     func clearSelected() -> Void {
-        for shape in self.selectedShapes {
+        guard let selectedShapes = self.selectedShapes() else {
+            return
+        }
+        for shape in selectedShapes {
             shape.deselect()
         }
-        self.selectedShapes.removeAll()
-    }
-    
-    // TODO: remove selectedShapes property and just use shapes?
-    func getSelectedShapes() -> [ColorShapeLayer]? {
-        return self.shapes.filter { $0.selected == true }
     }
     
     /**
@@ -44,8 +49,11 @@ class Square {
      
      :param: color
      */
-    func applyColor(_ color: UIColor) {
-        for shape in self.selectedShapes {
+    func applyColor(_ color: UIColor) -> Void {
+        guard let selectedShapes = self.selectedShapes() else {
+            return
+        }
+        for shape in selectedShapes {
             shape.applyColor(color)
         }
     }
