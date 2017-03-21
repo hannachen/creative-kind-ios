@@ -46,6 +46,6 @@ class ColorSwatchViewCell: UICollectionViewCell {
         self.colorSwatchButton.backgroundColor = color
         self.colorSwatchButton.layer.borderColor = color.darkened(amount: 0.25).cgColor
         self.colorSwatchButton.imageView?.isHidden = !(self.isSelected && self.painting)
-        self.colorSwatchButton.imageView?.tintColor = color.isLight() ? color.darkened(amount: 0.25) : color.lighter(amount: 0.4)
+        self.colorSwatchButton.imageView?.tintColor = color.isLight() ? color.darkened(amount: 0.25) : color.lighter(amount: 0.45)
     }
 }
