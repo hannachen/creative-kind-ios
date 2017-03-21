@@ -1,6 +1,0 @@
-framework module Pods_creative_kindTests {
-  umbrella header "Pods-creative-kindTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
