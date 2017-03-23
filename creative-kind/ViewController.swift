@@ -6,6 +6,8 @@
 //  Copyright © 2017 Rethink Canada. All rights reserved.
 //
 
+// HELP: How to make the inner square fit all screen sizes? (currently maxes out at 320)
+
 import UIKit
 
 private let maxOverscroll: CGFloat = -50
@@ -22,7 +24,6 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     // Properties
     var square: Square?
     var colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue]
-    var colorPaletteColumns: Int = 6 // Number of colors plus the last button
     var colorPaletteOffset: CGPoint = .zero
     var selectedColorSwatch: Int = 0 // Always select the first color swatch by default
     var paintMode: Bool = false
@@ -46,10 +47,14 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         super.viewDidLoad()
         
         self.squareView.delegate = self
-        self.squareView.layoutSquareView(container: self.squareContainerView)
+        self.squareView.layoutSquareView()
         
         self.colorPaletteView.dataSource = self
         self.colorPaletteView.delegate = self
+        
+        if let square = self.square {
+            square.delegate = self
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,28 +86,10 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.colorPaletteColumns
+        return self.colors.count
     }
     
-    // TODO: Use footer for the "apply colors"/"paint" button
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        // Last cell: deselect all/apply color
-        if indexPath.row + 1 == self.colorPaletteColumns {
-            
-            // Configure the cell
-            let cell: ApplyColorViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "apply", for: indexPath) as! ApplyColorViewCell
-            
-            cell.delegate = self
-            cell.painting = self.paintMode
-            
-            // Reset selection
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
-            
-            // Set cell button
-            cell.setupCell()
-            return cell
-        }
         
         // Color swatch cell
         let cell: ColorSwatchViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "swatch", for: indexPath) as! ColorSwatchViewCell
@@ -121,12 +108,31 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // Last cell: ignore
-        if indexPath.row + 1 == self.colorPaletteColumns {
-            return false
-        }
-        return true
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        // Configure the footer
+        let cell: ApplyColorViewCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "apply", for: indexPath) as! ApplyColorViewCell
+        
+        cell.delegate = self
+        cell.painting = self.paintMode
+        
+        // TODO: Find out why the code below doesn't work inside the cell
+        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTapApplyColorButton))
+        let tripleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tripleTapApplyColorButton))
+        
+        singleTap.numberOfTapsRequired = 1
+        tripleTap.numberOfTapsRequired = 3
+        
+        cell.applyColorButton.addGestureRecognizer(singleTap)
+        cell.applyColorButton.addGestureRecognizer(tripleTap)
+        
+        // Set cell button
+        cell.setupCell()
+        
+        // Reset selection
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -145,8 +151,11 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalColors: CGFloat = CGFloat(self.colorPaletteColumns)
-        return CGSize(width: self.colorPaletteView.frame.width/totalColors, height: self.colorPaletteView.frame.height)
+        return self.colorPaletteCols()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,referenceSizeForFooterInSection section: Int) -> CGSize {
+        return self.colorPaletteCols()
     }
     
     
@@ -184,9 +193,9 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         guard let square = self.square else {
             return // Don't do anything if square isn't initialized
         }
-        
+    
         // Select/Deselect shapes
-        if shape.selectToggle() {
+        if shape.toggle() {
             square.select(shape)
         } else {
             square.deselect(shape)
@@ -201,6 +210,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
+    // Shape selection changed
     func selectDidChange() {
         guard let square = self.square,
               let selectedShapes = square.selectedShapes() else {
@@ -225,17 +235,22 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     }
     
 
+    // Deselect all shapes
     private func clearSquare() {
         guard let square = self.square else {
             return
         }
         square.clearSelected()
-        self.selectDidChange() // TODO: find a better place for this?
     }
 
     private func togglePaintMode() -> Bool {
         self.paintMode = !self.paintMode
         return self.paintMode
+    }
+    
+    private func colorPaletteCols() -> CGSize {
+        let totalColors: CGFloat = CGFloat(self.colors.count + 1) // Number of colors plus the last button
+        return CGSize(width: self.colorPaletteView.frame.width/totalColors, height: self.colorPaletteView.frame.height)
     }
 }
 

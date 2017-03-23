@@ -11,6 +11,7 @@ import UIKit
 
 class Square {
     var shapes: [ColorShapeLayer]
+    var delegate: SquareViewDelegate?
     
     init(shapes: [ColorShapeLayer]) {
         self.shapes = shapes
@@ -36,12 +37,14 @@ class Square {
     }
     
     func clearSelected() -> Void {
-        guard let selectedShapes = self.selectedShapes() else {
+        guard let selectedShapes = self.selectedShapes(),
+              let deleget = self.delegate else {
             return
         }
         for shape in selectedShapes {
             shape.deselect()
         }
+        deleget.selectDidChange()
     }
     
     /**

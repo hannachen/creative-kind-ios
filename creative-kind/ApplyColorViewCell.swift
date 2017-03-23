@@ -1,5 +1,5 @@
 //
-//  ApplyColorViewCell
+//  ApplyColorViewCell.swift
 //  creative-kind
 //
 //  Created by Hanna Chen on 3/19/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApplyColorViewCell: UICollectionViewCell {
+class ApplyColorViewCell: UICollectionReusableView {
     // Outlets
     @IBOutlet var applyColorButton: ApplyColorButton!
     
@@ -16,8 +16,18 @@ class ApplyColorViewCell: UICollectionViewCell {
     var painting: Bool = false
     var delegate: ColorPaletteViewCellDelegate?
     
-    
     // MARK: Overrides
+    
+    // TODO: Remove below if unused
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.setupButton()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -28,6 +38,7 @@ class ApplyColorViewCell: UICollectionViewCell {
     
     // MARK: ApplyColorViewCellDelegate
     
+    // TODO: Remove below if unused
     func singleTapButton() {
         guard let delegate = self.delegate else {
             return
@@ -44,23 +55,14 @@ class ApplyColorViewCell: UICollectionViewCell {
     
     
     func setupCell() {
-        self.setupApplyColorButton()
+        self.applyColorButton.paintMode = self.painting
     }
+    
     
     /*
      Add and style checkmark image, attach events
      */
-    func setupApplyColorButton() {
-        
+    func setupButton() {
         self.applyColorButton.paintMode = self.painting
-        
-        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTapButton))
-        let tripleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tripleTapButton))
-        
-        singleTap.numberOfTapsRequired = 1
-        tripleTap.numberOfTapsRequired = 3
-        
-        self.applyColorButton.addGestureRecognizer(singleTap)
-        self.applyColorButton.addGestureRecognizer(tripleTap)
     }
 }

@@ -33,8 +33,6 @@
                                 <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Bht-my-Hde" firstAttribute="leading" secondItem="DC8-aX-Xox" secondAttribute="leading" id="J55-dz-vGx"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="500" constant="320" id="PSa-vd-sm3"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="500" constant="320" id="T4Z-V1-6KL"/>
                                     <constraint firstAttribute="width" secondItem="DC8-aX-Xox" secondAttribute="height" multiplier="1:1" id="XVu-Qf-JHI"/>
                                     <constraint firstAttribute="bottom" secondItem="Bht-my-Hde" secondAttribute="bottom" id="cd2-2C-2DC"/>
                                     <constraint firstItem="Bht-my-Hde" firstAttribute="top" secondItem="DC8-aX-Xox" secondAttribute="top" id="tO4-gi-Qze"/>
@@ -50,7 +48,7 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xe0-I6-fiD">
                                     <size key="itemSize" width="66" height="65"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" id="iBl-a2-Ci8" userLabel="Change Set">
@@ -86,28 +84,23 @@
                                             <outlet property="colorSwatchButton" destination="qOK-Fo-Fn3" id="pbh-mB-G9b"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="apply" id="YMr-QT-3ar" userLabel="Apply Color View Cell" customClass="ApplyColorViewCell" customModule="creative_kind" customModuleProvider="target">
-                                        <rect key="frame" x="54" y="0.5" width="54" height="54"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xA5-p0-r7S" customClass="ApplyColorButton" customModule="creative_kind" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
-                                                    <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                                </button>
-                                            </subviews>
-                                        </view>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="customSize" width="54" height="54"/>
-                                        <connections>
-                                            <outlet property="applyColorButton" destination="xA5-p0-r7S" id="Iuk-fB-VXC"/>
-                                        </connections>
-                                    </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" clipsSubviews="YES" contentMode="center" reuseIdentifier="apply" id="f5z-ty-qVj" userLabel="Collection Footer" customClass="ApplyColorViewCell" customModule="creative_kind" customModuleProvider="target">
+                                    <rect key="frame" x="54" y="0.0" width="50" height="55"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" tag="1" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xA5-p0-r7S" customClass="ApplyColorButton" customModule="creative_kind" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                            <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <outlet property="applyColorButton" destination="xA5-p0-r7S" id="0I2-xF-Cqc"/>
+                                    </connections>
+                                </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZY-MV-DyN">
                                 <rect key="frame" x="0.0" y="405" width="320" height="65"/>
@@ -125,6 +118,9 @@
                                         <rect key="frame" x="160" y="0.0" width="160" height="65"/>
                                         <state key="normal" title="Submit Design">
                                             <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="clickSubmitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QFg-ga-8Fo"/>
@@ -157,6 +153,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="DC8-aX-Xox" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="16m-GO-1BH"/>
                             <constraint firstItem="xZY-MV-DyN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8Nc-2U-0DM"/>
                             <constraint firstAttribute="trailing" secondItem="DC8-aX-Xox" secondAttribute="trailing" id="9qe-6J-LUq"/>
                             <constraint firstItem="dbw-d3-PwA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ATy-2h-8Em"/>

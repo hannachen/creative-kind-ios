@@ -22,6 +22,8 @@
 		5D39025A1E7A33D5005A990C /* grid-default.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5D3902591E7A33D5005A990C /* grid-default.svg */; };
 		5D39025F1E7A3547005A990C /* ColorShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */; };
 		5D3902611E7A4032005A990C /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3902601E7A4032005A990C /* SquareView.swift */; };
+		5D4274FF1E80AA5200BC0F48 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */; };
+		5D4275011E80AAFC00BC0F48 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4275001E80AAFC00BC0F48 /* Message.swift */; };
 		5D4275031E80ACA300BC0F48 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4275021E80ACA300BC0F48 /* Square.swift */; };
 		5D500B401E7B9BA300BD26B6 /* SquareViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */; };
 		5D500B421E7BAB7300BD26B6 /* ColorSwatchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */; };
@@ -74,6 +76,8 @@
 		5D3902591E7A33D5005A990C /* grid-default.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "grid-default.svg"; path = "svg/grid-default.svg"; sourceTree = SOURCE_ROOT; };
 		5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorShapeLayer.swift; sourceTree = "<group>"; };
 		5D3902601E7A4032005A990C /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
+		5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5D4275001E80AAFC00BC0F48 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		5D4275021E80ACA300BC0F48 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareViewDelegate.swift; sourceTree = "<group>"; };
 		5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSwatchViewCell.swift; sourceTree = "<group>"; };
@@ -146,17 +150,13 @@
 				5D0F92081E77A33500A80DD7 /* Assets.xcassets */,
 				5D0F92011E77A33500A80DD7 /* AppDelegate.swift */,
 				5D0F92031E77A33500A80DD7 /* ViewController.swift */,
-				5D951EB61E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift */,
-				5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */,
-				5D258CC41E7F036B00FA7ADC /* ApplyColorViewCell.swift */,
-				5D4275021E80ACA300BC0F48 /* Square.swift */,
-				5D3902601E7A4032005A990C /* SquareView.swift */,
-				5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */,
-				5DA7E97F1E7E7D68003F5E41 /* ColorSwatchButton.swift */,
-				5D258CC81E7F74EC00FA7ADC /* ApplyColorButton.swift */,
-				5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */,
+				5D4275041E81165000BC0F48 /* ColorSwatch */,
+				5D4275051E8116C600BC0F48 /* ApplyColor */,
+				5D4275061E8116EB00BC0F48 /* ColorPalette */,
+				5D4275071E81171200BC0F48 /* Square */,
+				5D4275001E80AAFC00BC0F48 /* Message.swift */,
+				5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */,
 				5D26B8681E7DF78F00186813 /* UIColor.swift */,
-				5D258CCA1E7F763800FA7ADC /* ColorPaletteButtonControlState.swift */,
 				5DA7E97B1E7E50E4003F5E41 /* SingleTouchDownGestureRecognizer.swift */,
 				5D0F92051E77A33500A80DD7 /* Main.storyboard */,
 				5D0F920A1E77A33500A80DD7 /* LaunchScreen.storyboard */,
@@ -189,6 +189,44 @@
 				5D3902591E7A33D5005A990C /* grid-default.svg */,
 			);
 			name = svg;
+			sourceTree = "<group>";
+		};
+		5D4275041E81165000BC0F48 /* ColorSwatch */ = {
+			isa = PBXGroup;
+			children = (
+				5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */,
+				5DA7E97F1E7E7D68003F5E41 /* ColorSwatchButton.swift */,
+			);
+			name = ColorSwatch;
+			sourceTree = "<group>";
+		};
+		5D4275051E8116C600BC0F48 /* ApplyColor */ = {
+			isa = PBXGroup;
+			children = (
+				5D258CC41E7F036B00FA7ADC /* ApplyColorViewCell.swift */,
+				5D258CC81E7F74EC00FA7ADC /* ApplyColorButton.swift */,
+			);
+			name = ApplyColor;
+			sourceTree = "<group>";
+		};
+		5D4275061E8116EB00BC0F48 /* ColorPalette */ = {
+			isa = PBXGroup;
+			children = (
+				5D951EB61E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift */,
+				5D258CCA1E7F763800FA7ADC /* ColorPaletteButtonControlState.swift */,
+			);
+			name = ColorPalette;
+			sourceTree = "<group>";
+		};
+		5D4275071E81171200BC0F48 /* Square */ = {
+			isa = PBXGroup;
+			children = (
+				5D4275021E80ACA300BC0F48 /* Square.swift */,
+				5D3902601E7A4032005A990C /* SquareView.swift */,
+				5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */,
+				5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */,
+			);
+			name = Square;
 			sourceTree = "<group>";
 		};
 		BA22E3FC0EC2387F0171038D /* Frameworks */ = {
@@ -512,7 +550,9 @@
 				5D4275031E80ACA300BC0F48 /* Square.swift in Sources */,
 				5D951EB71E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift in Sources */,
 				5D26B8691E7DF78F00186813 /* UIColor.swift in Sources */,
+				5D4274FF1E80AA5200BC0F48 /* NetworkManager.swift in Sources */,
 				5DA7E9801E7E7D68003F5E41 /* ColorSwatchButton.swift in Sources */,
+				5D4275011E80AAFC00BC0F48 /* Message.swift in Sources */,
 				5D500B421E7BAB7300BD26B6 /* ColorSwatchViewCell.swift in Sources */,
 				5D500B401E7B9BA300BD26B6 /* SquareViewDelegate.swift in Sources */,
 			);

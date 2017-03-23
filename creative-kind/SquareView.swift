@@ -13,6 +13,7 @@ class SquareView: UIView {
     // Properties
     var pathsBoundingBox: CGRect = .zero
     var delegate: SquareViewDelegate?
+    var resized: Int = 0
     
     
     // MARK: Overrides
@@ -31,7 +32,7 @@ class SquareView: UIView {
     }
     
     
-    func layoutSquareView(container: UIView) {
+    func layoutSquareView() {
         self.generateSquareFromSvg()
         self.setupTapHandler()
         self.fitGrid()
@@ -67,7 +68,7 @@ class SquareView: UIView {
                 continue // Don't add this shape to the layer or it'll get selected
             }
             
-            // TODO: Find the missing lines
+            // TODO: Find the missing lines (only shapes are picked up by the library?)
             
             // Create a layer for each path
             let shape = ColorShapeLayer()
@@ -84,6 +85,9 @@ class SquareView: UIView {
         }
     }
     
+    /*
+     Attach tap event to this element
+    */
     func setupTapHandler() {
         let tapGestureRecognizer = SingleTouchDownGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
@@ -91,11 +95,12 @@ class SquareView: UIView {
     }
     
     func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) {
+        // Unwrap these
         guard let touch = gestureRecognizer.location(in: self) as CGPoint?,
               let layers = self.layer.sublayers as! [ColorShapeLayer]? else {
             return
         }
-        
+        // Put touch point through shape hit test
         for layer in layers {
             guard let hitLayer = layer.hitTest(touch) else {
                 continue

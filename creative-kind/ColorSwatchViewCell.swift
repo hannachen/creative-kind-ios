@@ -22,11 +22,6 @@ class ColorSwatchViewCell: UICollectionViewCell {
     
     // MARK: Overrides
     
-    override var isSelected: Bool {
-        didSet {
-        }
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         

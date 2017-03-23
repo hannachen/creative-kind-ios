@@ -21,8 +21,7 @@ extension UIColor {
               let b = components[2] else {
             return false
         }
-        // HSP Color Model: http://alienryderflex.com/hsp.html
-        let brightness = sqrt(0.299 * pow(Double(r),2) + 0.587 * pow(Double(g),2) + 0.114 * pow(Double(b),2))
+        let brightness = self.rgbBrightness(r: Double(r), g: Double(g), b: Double(b))
         if brightness < 0.65 {
             return false
         } else {
@@ -30,5 +29,8 @@ extension UIColor {
         }
     }
     
-    
+    // HSP Color Model: http://alienryderflex.com/hsp.html
+    func rgbBrightness(r: Double, g: Double, b: Double) -> Double {
+        return sqrt(0.299 * pow(r,2) + 0.587 * pow(g,2) + 0.114 * pow(b,2))
+    }
 }
