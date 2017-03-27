@@ -106,7 +106,7 @@ class SquareView: UIView {
             }
             if let delegate = self.delegate {
                 delegate.selectShape(shape: hitLayer)
-                delegate.selectDidChange()
+                delegate.selectDidChange?()
             }
             return
         }

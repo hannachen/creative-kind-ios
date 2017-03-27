@@ -8,12 +8,16 @@
 
 import Foundation
 
-protocol SquareViewDelegate {
+@objc protocol SquareViewDelegate: class {
     
     func squareDidLoad(shapes: [ColorShapeLayer])
     
     func selectShape(shape: ColorShapeLayer)
+    
+    @objc optional func squareWillSave(saveData: [String: Int])
+    
+    @objc optional func squareDidSave(success: Bool, filePath: String)
 
     /* Selected shapes have changed in any way: select/deselect1/toggle */
-    func selectDidChange()
+    @objc optional func selectDidChange()
 }

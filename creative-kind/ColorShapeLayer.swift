@@ -23,7 +23,7 @@ class ColorShapeLayer: CAShapeLayer {
     var color: UIColor?
     
     /* The index of this colour within a palette of colours */
-    var colorIndex: Int = 0
+    var colorIndex: Int?
     
     /* Mimimum contrast between the fill color and selected border color. */
     var contrastThreshold: CGFloat = 1.25

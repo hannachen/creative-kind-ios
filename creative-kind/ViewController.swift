@@ -60,12 +60,12 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         if let square = self.square {
             square.delegate = self
             square.palette = self.colors
+            square.loadData()
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -75,10 +75,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         guard let square = self.square else {
             return
         }
-        let data = square.getData()
-        print("SAVED DATA: \(data)")
-        
-        // Convert data to a json object?
+        square.save()
     }
     
     @IBAction func clickSubmitButton(_ sender: Any) {
@@ -193,6 +190,18 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     func squareDidLoad(shapes: [ColorShapeLayer]) {
         self.square = Square(shapes: shapes)
+    }
+    
+    func squareWillSave(saveData: [String : Int]) {
+    }
+    
+    // Square saved
+    func squareDidSave(success: Bool, filePath: String) {
+        if success {
+            print("Square successfully saved to \(filePath).")
+        } else {
+            print("Failed to save square...")
+        }
     }
     
     func selectShape(shape: ColorShapeLayer) {

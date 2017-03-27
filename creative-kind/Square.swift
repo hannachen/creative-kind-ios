@@ -8,16 +8,43 @@
 
 import Foundation
 import UIKit
+import os.log
 
-class Square {
+class Square: NSObject, NSCoding {
     // Properties
+    struct PropertyKey {
+        static let data = "square"
+    }
+    var shapeData: [String: Int?] = [:]
     var shapes: [ColorShapeLayer] = []
     var delegate: SquareViewDelegate?
     var palette: [UIColor] = []
     
+    
+    // MARK: Archiving Paths
+    
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent(PropertyKey.data)
+    
+    
     init(shapes: [ColorShapeLayer]) {
         self.shapes = shapes
     }
+    
+    // MARK: NSCoding
+    
+    required init?(coder aDecoder: NSCoder) {
+        if let shapeData = aDecoder.decodeObject(forKey: PropertyKey.data) as? [String: Int] {
+            self.shapeData = shapeData
+        }
+        return nil
+    }
+    
+    func encode(with aCoder: NSCoder) -> Void {
+        let shapeData = self.getData()
+        aCoder.encode(shapeData, forKey: PropertyKey.data)
+    }
+    
     
     func select(_ shape: ColorShapeLayer) -> Void {
         self.findShape(shape)?.selected = true
@@ -46,7 +73,11 @@ class Square {
         for shape in selectedShapes {
             shape.deselect()
         }
-        deleget.selectDidChange()
+        deleget.selectDidChange?()
+    }
+    
+    func setupShapes(_ shapes: [ColorShapeLayer]) {
+        self.shapes = shapes
     }
     
     /**
@@ -72,30 +103,49 @@ class Square {
         return index
     }
     
-    func loadData(_ shapes: [ColorShapeLayer]) -> Void {
-        self.shapes = shapes
-    }
-    
-    func getData() -> [String: Int?] {
+    func getData() -> [String: Int] {
         var shapeData: [String: Int] = [:]
         for shape in self.shapes {
-            guard let id = shape.id else {
+            guard let id = shape.id,
+                  let colorIndex = shape.colorIndex else {
                 continue
             }
-            shapeData[id] = shape.colorIndex
+            // Only save coloured shapes
+            shapeData[id] = colorIndex
         }
         return shapeData
     }
     
-    func convertData() -> [Int] {
-        // Shape data
-        var shapeData: [Int] = []
+    func save() {
+        let saveData = self.getData()
+        if let delegate = self.delegate {
+            delegate.squareWillSave?(saveData: saveData)
+        }
+        self.saveData(saveData)
+    }
+    
+    func saveData(_ shapeData: [String: Int]) -> Void {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(shapeData, toFile: Square.ArchiveURL.path)
+        if let delegate = self.delegate {
+            delegate.squareDidSave?(success: isSuccessfulSave, filePath: Square.ArchiveURL.path)
+        }
+    }
+    
+    func loadData() -> Void {
+        guard let shapeData = NSKeyedUnarchiver.unarchiveObject(withFile: Square.ArchiveURL.path) as? [String: Int] else {
+            return
+        }
+        self.shapeData = shapeData
+        print("shape data: \(self.shapeData)")
         for shape in self.shapes {
-            guard let color = shape.color else {
+            guard let id = shape.id,
+                  let colorIndex = shapeData[id],
+                  let color = self.palette[colorIndex] as UIColor? else {
                 continue
             }
-            shapeData.append(self.getColorIndex(color))
+            shape.select()
+            shape.applyColor(color, index: colorIndex)
+            shape.deselect()
         }
-        return shapeData
     }
 }
