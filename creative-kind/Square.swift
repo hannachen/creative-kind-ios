@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 
 class Square {
-    var shapes: [ColorShapeLayer]
+    // Properties
+    var shapes: [ColorShapeLayer] = []
     var delegate: SquareViewDelegate?
+    var palette: [UIColor] = []
     
     init(shapes: [ColorShapeLayer]) {
         self.shapes = shapes
@@ -53,15 +55,47 @@ class Square {
      :param: color
      */
     func applyColor(_ color: UIColor) -> Void {
+        // Ignore if no shapes are selected
         guard let selectedShapes = self.selectedShapes() else {
             return
         }
         for shape in selectedShapes {
-            shape.applyColor(color)
+            shape.applyColor(color, index: self.getColorIndex(color))
         }
     }
     
-    func getData() -> [CAShapeLayer] {
-        return self.shapes
+    // Get the index of a color in the color set
+    func getColorIndex(_ color: UIColor) -> Int {
+        guard let index = self.palette.index(of: color) else {
+            return 0
+        }
+        return index
+    }
+    
+    func loadData(_ shapes: [ColorShapeLayer]) -> Void {
+        self.shapes = shapes
+    }
+    
+    func getData() -> [String: Int?] {
+        var shapeData: [String: Int] = [:]
+        for shape in self.shapes {
+            guard let id = shape.id else {
+                continue
+            }
+            shapeData[id] = shape.colorIndex
+        }
+        return shapeData
+    }
+    
+    func convertData() -> [Int] {
+        // Shape data
+        var shapeData: [Int] = []
+        for shape in self.shapes {
+            guard let color = shape.color else {
+                continue
+            }
+            shapeData.append(self.getColorIndex(color))
+        }
+        return shapeData
     }
 }

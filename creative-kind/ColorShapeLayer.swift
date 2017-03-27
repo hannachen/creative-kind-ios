@@ -8,12 +8,25 @@
 
 import UIKit
 import PocketSVG
+import DynamicColor
 
 class ColorShapeLayer: CAShapeLayer {
     // Properties
+    
+    /* The unique ID of the shape, used whe saving data */
     var id: String?
+    
+    /* The select state of this shape. Defaults to false. */
     var selected: Bool = false
+    
+    /* Fill color of this shape */
     var color: UIColor?
+    
+    /* The index of this colour within a palette of colours */
+    var colorIndex: Int = 0
+    
+    /* Mimimum contrast between the fill color and selected border color. */
+    var contrastThreshold: CGFloat = 1.25
     
     
     // MARK: Overrides
@@ -26,7 +39,7 @@ class ColorShapeLayer: CAShapeLayer {
         return self
     }
     
-    func setupShapeFromPath(_ id: String, path: SVGBezierPath) {
+    func setupShapeFromPath(_ id: String, path: SVGBezierPath) -> Void {
         
         self.id = id
         
@@ -65,7 +78,7 @@ class ColorShapeLayer: CAShapeLayer {
         self.fillColor = fillColor
     }
     
-    func selectToggle() -> Bool {
+    func toggle() -> Bool {
         if self.selected {
             self.deselect()
         } else {
@@ -74,25 +87,50 @@ class ColorShapeLayer: CAShapeLayer {
         return self.selected
     }
     
-    func select() {
+    func select() -> Void {
         self.selected = true
         self.lineWidth = 1.5
-        self.strokeColor = UIColor.darkGray.cgColor // TODO: Use color contrast to find a suitable selected border color
         self.opacity = 0.9
         self.zPosition = 1
+        
+        // Set color
+        self.setBorderColor()
     }
     
-    func deselect() {
+    func deselect() -> Void {
         self.selected = false
         self.lineWidth = 0.5
-        self.strokeColor = UIColor.lightGray.cgColor
         self.opacity = 1
         self.zPosition = 0
+        self.strokeColor = UIColor.lightGray.cgColor
     }
     
-    func applyColor(_ color: UIColor) {
-        self.color = color
+    func applyColor(_ color: UIColor, index: Int) -> Void {
+        // Apply the color
         self.fillColor = color.cgColor
+        self.setBorderColor()
+        
+        // Save color data
+        self.color = color
+        self.colorIndex = index
     }
-
+    
+    /* Determine border color (default: darkGray, low contrast: adjusted Hue) */
+    func getBorderColor() -> UIColor {
+        let defaultColor = UIColor.darkGray
+        
+        guard let color = self.color,
+              let contrastRatio = color.contrastRatio(with: defaultColor) as CGFloat?, // Compare contrast
+              contrastRatio < self.contrastThreshold else {
+            return defaultColor
+        }
+        return color.adjustedHue(amount: 80)
+    }
+    
+    func setBorderColor() -> Void {
+        let borderColor = self.getBorderColor()
+        
+        // Set color
+        self.strokeColor = borderColor.cgColor
+    }
 }

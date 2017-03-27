@@ -14,5 +14,6 @@ protocol SquareViewDelegate {
     
     func selectShape(shape: ColorShapeLayer)
 
+    /* Selected shapes have changed in any way: select/deselect1/toggle */
     func selectDidChange()
 }

@@ -6,28 +6,31 @@
 //  Copyright © 2017 Rethink Canada. All rights reserved.
 //
 
-// HELP: How to make the inner square fit all screen sizes? (currently maxes out at 320)
-
 import UIKit
 
 private let maxOverscroll: CGFloat = -50
 
+// TODO: "Save Draft" button to save color data to core data
+// TODO: "Submit Design" button to send color data to API endpoint with network call
+// TODO: Color set selection
 class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
     // Outlets
     @IBOutlet var squareContainerView: UIView!
+    @IBOutlet var squareView: SquareView!
     @IBOutlet var colorPaletteView: UICollectionView!
-    @IBOutlet var selectedLabel: UILabel!
     @IBOutlet var saveButtonsView: UIView!
     @IBOutlet var saveButtons: [UIButton]!
-    @IBOutlet var squareView: SquareView!
+    @IBOutlet var selectedLabel: UILabel!
     
     // Properties
     var square: Square?
     var colors: [UIColor] = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue]
     var colorPaletteOffset: CGPoint = .zero
     var selectedColorSwatch: Int = 0 // Always select the first color swatch by default
-    var paintMode: Bool = false
     
+    /* Toggles the current colouring mode to "painting" mode. Default is off. */
+    var paintMode: Bool = false
+  
     
     // Lock orientation
     override var shouldAutorotate: Bool {
@@ -46,14 +49,17 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.squareContainerView.frame = self.view.bounds
+        
         self.squareView.delegate = self
-        self.squareView.layoutSquareView()
+        self.squareView.layoutSquareView(container: self.squareContainerView.frame)
         
         self.colorPaletteView.dataSource = self
         self.colorPaletteView.delegate = self
         
         if let square = self.square {
             square.delegate = self
+            square.palette = self.colors
         }
     }
 

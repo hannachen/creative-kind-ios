@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-aX-Xox" customClass="SquareView" customModule="creative_kind" customModuleProvider="target">
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="500" verticalHuggingPriority="500" translatesAutoresizingMaskIntoConstraints="NO" id="DC8-aX-Xox">
                                 <rect key="frame" x="0.0" y="30" width="320" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bht-my-Hde" userLabel="Square View" customClass="SquareView" customModule="creative_kind" customModuleProvider="target">
@@ -153,7 +153,6 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DC8-aX-Xox" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="16m-GO-1BH"/>
                             <constraint firstItem="xZY-MV-DyN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8Nc-2U-0DM"/>
                             <constraint firstAttribute="trailing" secondItem="DC8-aX-Xox" secondAttribute="trailing" id="9qe-6J-LUq"/>
                             <constraint firstItem="dbw-d3-PwA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ATy-2h-8Em"/>

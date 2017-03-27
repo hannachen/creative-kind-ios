@@ -13,7 +13,6 @@ class SquareView: UIView {
     // Properties
     var pathsBoundingBox: CGRect = .zero
     var delegate: SquareViewDelegate?
-    var resized: Int = 0
     
     
     // MARK: Overrides
@@ -32,14 +31,14 @@ class SquareView: UIView {
     }
     
     
-    func layoutSquareView() {
+    func layoutSquareView(container: CGRect) {
         self.generateSquareFromSvg()
         self.setupTapHandler()
-        self.fitGrid()
+        self.fitGrid(frame: container)
     }
     
-    func fitGrid() {
-        let scaleFactor = CGFloat(self.frame.width / self.pathsBoundingBox.width)
+    func fitGrid(frame: CGRect) {
+        let scaleFactor = CGFloat(frame.width / self.pathsBoundingBox.width)
         self.layer.transform = CATransform3DMakeScale(scaleFactor, scaleFactor, 1.0)
     }
     
