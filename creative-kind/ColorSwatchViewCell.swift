@@ -36,7 +36,7 @@ class ColorSwatchViewCell: UICollectionViewCell {
         self.setupColorSwatchButton(color)
     }
     
-    func setupColorSwatchButton(_ color: UIColor) {
+    private func setupColorSwatchButton(_ color: UIColor) {
         self.colorSwatchButton.paintMode = self.painting
         self.colorSwatchButton.backgroundColor = color
         self.colorSwatchButton.layer.borderColor = color.darkened(amount: 0.25).cgColor

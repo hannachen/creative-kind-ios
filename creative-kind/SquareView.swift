@@ -27,22 +27,22 @@ class SquareView: UIView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        self.frame = self.bounds
+        self.frame = self.bounds // fit to screen size
     }
     
     
-    func layoutSquareView(container: CGRect) {
+    func layoutSquareView(container: CGRect) -> Void {
         self.generateSquareFromSvg()
         self.setupTapHandler()
         self.fitGrid(frame: container)
     }
     
-    func fitGrid(frame: CGRect) {
+    private func fitGrid(frame: CGRect) {
         let scaleFactor = CGFloat(frame.width / self.pathsBoundingBox.width)
         self.layer.transform = CATransform3DMakeScale(scaleFactor, scaleFactor, 1.0)
     }
     
-    func generateSquareFromSvg() {
+    private func generateSquareFromSvg() -> Void {
         
         // Check for file, convert svg to paths, create svg layer
         guard let url = Bundle.main.url(forResource: "grid-default", withExtension: "svg") as URL?,
@@ -87,13 +87,13 @@ class SquareView: UIView {
     /*
      Attach tap event to this element
     */
-    func setupTapHandler() {
+    private func setupTapHandler() -> Void {
         let tapGestureRecognizer = SingleTouchDownGestureRecognizer(target: self, action: #selector(viewTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) {
+    func viewTapped(gestureRecognizer: SingleTouchDownGestureRecognizer) -> Void {
         // Unwrap these
         guard let touch = gestureRecognizer.location(in: self) as CGPoint?,
               let layers = self.layer.sublayers as! [ColorShapeLayer]? else {

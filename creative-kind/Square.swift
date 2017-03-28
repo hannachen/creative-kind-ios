@@ -53,7 +53,17 @@ class Square: NSObject, NSCoding {
         self.findShape(shape)?.selected = false
     }
     
-    func findShape(_ shape: ColorShapeLayer) -> ColorShapeLayer? {
+    func toggle(_ shape: ColorShapeLayer) -> Void {
+        if let selectedShape = self.findShape(shape) {
+            if selectedShape.toggle() {
+                self.select(shape)
+            } else {
+                self.deselect(shape)
+            }
+        }
+    }
+    
+    private func findShape(_ shape: ColorShapeLayer) -> ColorShapeLayer? {
         if let index = self.shapes.index(of: shape) {
             return self.shapes[index]
         }
@@ -102,14 +112,14 @@ class Square: NSObject, NSCoding {
     }
     
     // Get the index of a color in the color set
-    func getColorIndex(_ color: UIColor) -> Int {
+    private func getColorIndex(_ color: UIColor) -> Int {
         guard let index = self.palette.index(of: color) else {
             return 0
         }
         return index
     }
     
-    func getData() -> [String: Int] {
+    private func getData() -> [String: Int] {
         var shapeData: [String: Int] = [:]
         for shape in self.shapes {
             guard let id = shape.id,
@@ -130,7 +140,7 @@ class Square: NSObject, NSCoding {
         self.saveData(saveData)
     }
     
-    func saveData(_ shapeData: [String: Int]) -> Void {
+    private func saveData(_ shapeData: [String: Int]) -> Void {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(shapeData, toFile: Square.ArchiveURL.path)
         if let delegate = self.delegate {
             delegate.squareDidSave?(success: isSuccessfulSave, filePath: Square.ArchiveURL.path)

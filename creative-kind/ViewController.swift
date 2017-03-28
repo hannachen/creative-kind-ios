@@ -10,7 +10,6 @@ import UIKit
 
 private let maxOverscroll: CGFloat = -50
 
-// TODO: "Save Draft" button to save color data to core data
 // TODO: "Submit Design" button to send color data to API endpoint with network call
 // TODO: Color set selection
 class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate, ColorPaletteViewCellDelegate, SquareViewDelegate {
@@ -220,11 +219,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         }
     
         // Select/Deselect shapes
-        if shape.toggle() {
-            square.select(shape)
-        } else {
-            square.deselect(shape)
-        }
+        square.toggle(shape)
         
         // Print mode
         if self.paintMode {
