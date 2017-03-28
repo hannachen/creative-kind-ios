@@ -75,6 +75,13 @@ class Square: NSObject, NSCoding {
         deleget.selectDidChange?()
     }
     
+    func reset() -> Void {
+        for shape in self.shapes {
+            shape.reset()
+        }
+        print("RESET")
+    }
+    
     func setupShapes(_ shapes: [ColorShapeLayer]) {
         self.shapes = shapes
     }

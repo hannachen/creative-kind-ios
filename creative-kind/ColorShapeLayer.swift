@@ -105,7 +105,16 @@ class ColorShapeLayer: CAShapeLayer {
         self.strokeColor = UIColor.lightGray.cgColor
     }
     
+    func reset() -> Void {
+        self.deselect()
+        self.applyColor(color: UIColor.white, index: nil)
+    }
+    
     func applyColor(_ color: UIColor, index: Int) -> Void {
+        self.applyColor(color: color, index: index)
+    }
+    
+    private func applyColor(color: UIColor, index: Int?) -> Void {
         // Apply the color
         self.fillColor = color.cgColor
         self.setBorderColor()

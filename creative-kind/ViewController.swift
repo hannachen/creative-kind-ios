@@ -185,6 +185,16 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         scrollView.backgroundColor = offset.x < maxOverscroll ? UIColor.darkGray : UIColor.lightGray
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offset: CGPoint = scrollView.contentOffset
+        
+        // Clear square on overscroll
+        if offset.x < maxOverscroll {
+            self.square?.reset()
+            return
+        }
+    }
+    
     
     // MARK: SquareViewDelegate
     
