@@ -16,25 +16,6 @@ class ApplyColorViewCell: UICollectionReusableView {
     var painting: Bool = false
     var delegate: ColorPaletteViewCellDelegate?
     
-    // MARK: Overrides
-    
-    // TODO: Remove below if unused
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.setupButton()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.applyColorButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: self.frame.width, height: self.frame.height))
-    }
-    
     
     // MARK: ApplyColorViewCellDelegate
     
@@ -55,14 +36,6 @@ class ApplyColorViewCell: UICollectionReusableView {
     
     
     func setupCell() {
-        self.applyColorButton.paintMode = self.painting
-    }
-    
-    
-    /*
-     Add and style checkmark image, attach events
-     */
-    func setupButton() {
         self.applyColorButton.paintMode = self.painting
     }
 }

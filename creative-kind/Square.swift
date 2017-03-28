@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import os.log
 
 class Square: NSObject, NSCoding {
     // Properties
