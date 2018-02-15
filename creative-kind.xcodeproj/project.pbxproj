@@ -22,8 +22,6 @@
 		5D39025A1E7A33D5005A990C /* grid-default.svg in Resources */ = {isa = PBXBuildFile; fileRef = 5D3902591E7A33D5005A990C /* grid-default.svg */; };
 		5D39025F1E7A3547005A990C /* ColorShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */; };
 		5D3902611E7A4032005A990C /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3902601E7A4032005A990C /* SquareView.swift */; };
-		5D4274FF1E80AA5200BC0F48 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */; };
-		5D4275011E80AAFC00BC0F48 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4275001E80AAFC00BC0F48 /* Message.swift */; };
 		5D4275031E80ACA300BC0F48 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4275021E80ACA300BC0F48 /* Square.swift */; };
 		5D500B401E7B9BA300BD26B6 /* SquareViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */; };
 		5D500B421E7BAB7300BD26B6 /* ColorSwatchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */; };
@@ -76,8 +74,6 @@
 		5D3902591E7A33D5005A990C /* grid-default.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "grid-default.svg"; path = "svg/grid-default.svg"; sourceTree = SOURCE_ROOT; };
 		5D39025E1E7A3547005A990C /* ColorShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorShapeLayer.swift; sourceTree = "<group>"; };
 		5D3902601E7A4032005A990C /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
-		5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		5D4275001E80AAFC00BC0F48 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		5D4275021E80ACA300BC0F48 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		5D500B3F1E7B9BA300BD26B6 /* SquareViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareViewDelegate.swift; sourceTree = "<group>"; };
 		5D500B411E7BAB7300BD26B6 /* ColorSwatchViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSwatchViewCell.swift; sourceTree = "<group>"; };
@@ -154,8 +150,6 @@
 				5D4275051E8116C600BC0F48 /* ApplyColor */,
 				5D4275061E8116EB00BC0F48 /* ColorPalette */,
 				5D4275071E81171200BC0F48 /* Square */,
-				5D4275001E80AAFC00BC0F48 /* Message.swift */,
-				5D4274FE1E80AA5200BC0F48 /* NetworkManager.swift */,
 				5D26B8681E7DF78F00186813 /* UIColor.swift */,
 				5DA7E97B1E7E50E4003F5E41 /* SingleTouchDownGestureRecognizer.swift */,
 				5D0F92051E77A33500A80DD7 /* Main.storyboard */,
@@ -331,7 +325,7 @@
 				TargetAttributes = {
 					5D0F91FD1E77A33500A80DD7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 576F249KQL;
+						DevelopmentTeam = 5C59CU892C;
 						ProvisioningStyle = Automatic;
 					};
 					5D0F92111E77A33500A80DD7 = {
@@ -418,13 +412,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-creative-kindTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		61E458402F47B2518AA0512F /* [CP] Check Pods Manifest.lock */ = {
@@ -433,13 +430,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-creative-kind-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		653E823E84B74B8F45098463 /* [CP] Copy Pods Resources */ = {
@@ -463,9 +463,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-creative-kind/Pods-creative-kind-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicColor/DynamicColor.framework",
+				"${BUILT_PRODUCTS_DIR}/PocketSVG/PocketSVG.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PocketSVG.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -523,13 +530,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-creative-kindUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -550,9 +560,7 @@
 				5D4275031E80ACA300BC0F48 /* Square.swift in Sources */,
 				5D951EB71E7BB8190041FA5A /* ColorPaletteViewCellDelegate.swift in Sources */,
 				5D26B8691E7DF78F00186813 /* UIColor.swift in Sources */,
-				5D4274FF1E80AA5200BC0F48 /* NetworkManager.swift in Sources */,
 				5DA7E9801E7E7D68003F5E41 /* ColorSwatchButton.swift in Sources */,
-				5D4275011E80AAFC00BC0F48 /* Message.swift in Sources */,
 				5D500B421E7BAB7300BD26B6 /* ColorSwatchViewCell.swift in Sources */,
 				5D500B401E7B9BA300BD26B6 /* SquareViewDelegate.swift in Sources */,
 			);
@@ -707,11 +715,14 @@
 			baseConfigurationReference = A4C6FFD42103874018C18912 /* Pods-creative-kind.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 576F249KQL;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5C59CU892C;
 				INFOPLIST_FILE = "creative-kind/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rethinkcanada.creative-kind";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -721,11 +732,14 @@
 			baseConfigurationReference = 61915DE840E9D69EED4F0683 /* Pods-creative-kind.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 576F249KQL;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5C59CU892C;
 				INFOPLIST_FILE = "creative-kind/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rethinkcanada.creative-kind";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
